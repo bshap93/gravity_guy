@@ -1,8 +1,10 @@
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gravity_guy/main.dart';
 
 class Astronaut extends SpriteAnimationComponent
-    with HasGameRef<GravityGuyGame> {
+    with HasGameRef<GravityGuyGame>, KeyboardHandler {
   Astronaut()
       : super(
           size: Vector2(50, 50),
@@ -32,5 +34,31 @@ class Astronaut extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
+    if (isWalking) {
+      playing = true;
+    } else {
+      playing = false;
+    }
   }
+
+  @override
+  KeyEventResult onKeyEvent(
+      KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    if (event is KeyDownEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
+          event.logicalKey == LogicalKeyboardKey.arrowLeft ||
+          event.logicalKey == LogicalKeyboardKey.arrowUp ||
+          event.logicalKey == LogicalKeyboardKey.arrowDown) {
+        playing = true;
+      }
+    }
+  }
+
+  // @override
+  // KeyEventResult onKeyEvent(
+  //     KeyEvent event,
+  //     Set<LogicalKeyboardKey> keysPressed,
+  // ) {
+
+  // }
 }
