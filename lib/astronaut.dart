@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gravity_guy/main.dart';
+
+enum SpriteOrientedDirection { left, right }
 
 class Astronaut extends SpriteAnimationComponent
     with HasGameRef<GravityGuyGame>, KeyboardHandler {
@@ -12,6 +12,18 @@ class Astronaut extends SpriteAnimationComponent
         );
 
   bool isWalking = false;
+
+  SpriteOrientedDirection walkDirection = SpriteOrientedDirection.right;
+
+  changeDirection(SpriteOrientedDirection direction) {
+    walkDirection = direction;
+
+    if (direction == SpriteOrientedDirection.left) {
+      // flip sprite
+      angle = 3.14;
+      flipVertically();
+    }
+  }
 
   @override
   Future<void> onLoad() async {
@@ -28,6 +40,7 @@ class Astronaut extends SpriteAnimationComponent
     // sprite = await gameRef.loadSprite('astronaut3.png');
     position = Vector2(500, 225);
     playing = false;
+    // angle = 0;
     // stop animation
   }
 
@@ -39,26 +52,9 @@ class Astronaut extends SpriteAnimationComponent
     } else {
       playing = false;
     }
+
+    // if (walkDirection == WalkDirection.left) {
+    //
+    // }
   }
-
-  @override
-  KeyEventResult onKeyEvent(
-      KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if (event is KeyDownEvent) {
-      if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
-          event.logicalKey == LogicalKeyboardKey.arrowLeft ||
-          event.logicalKey == LogicalKeyboardKey.arrowUp ||
-          event.logicalKey == LogicalKeyboardKey.arrowDown) {
-        playing = true;
-      }
-    }
-  }
-
-  // @override
-  // KeyEventResult onKeyEvent(
-  //     KeyEvent event,
-  //     Set<LogicalKeyboardKey> keysPressed,
-  // ) {
-
-  // }
 }
