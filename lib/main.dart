@@ -41,9 +41,12 @@ class GravityGuyGame extends FlameGame with KeyboardEvents {
     Set<LogicalKeyboardKey> keysPressed,
   ) {
     final isKeyDown = event is KeyDownEvent;
+    final isKeyUp = event is KeyUpEvent;
 
     final isArrowRight = keysPressed.contains(LogicalKeyboardKey.arrowRight);
     final isArrowLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft);
+    final wasArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
+    final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final isKeySpace = keysPressed.contains(LogicalKeyboardKey.space);
 
     if (isArrowRight && isKeyDown) {
@@ -52,6 +55,15 @@ class GravityGuyGame extends FlameGame with KeyboardEvents {
         (element) => element is Astronaut,
       ) as Astronaut;
       astronaut.isWalking = true;
+      astronaut.changeDirection(SpriteOrientedDirection.right);
+      return KeyEventResult.handled;
+    }
+
+    if (wasArrowRight && isKeyUp) {
+      final astronaut = world.children.firstWhere(
+        (element) => element is Astronaut,
+      ) as Astronaut;
+      astronaut.isWalking = false;
       return KeyEventResult.handled;
     }
 
@@ -59,13 +71,22 @@ class GravityGuyGame extends FlameGame with KeyboardEvents {
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
-      if (astronaut.walkDirection == SpriteOrientedDirection.left) {
+      if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
         return KeyEventResult.ignored;
       }
       astronaut.isWalking = true;
       astronaut.changeDirection(SpriteOrientedDirection.left);
       return KeyEventResult.handled;
     }
+
+    if (isKeyUp && wasArrowLeft) {
+      final astronaut = world.children.firstWhere(
+        (element) => element is Astronaut,
+      ) as Astronaut;
+      astronaut.isWalking = false;
+      return KeyEventResult.handled;
+    }
+
     return KeyEventResult.ignored;
   }
 }

@@ -13,14 +13,21 @@ class Astronaut extends SpriteAnimationComponent
 
   bool isWalking = false;
 
-  SpriteOrientedDirection walkDirection = SpriteOrientedDirection.right;
+  SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
 
   changeDirection(SpriteOrientedDirection direction) {
-    walkDirection = direction;
-
-    if (direction == SpriteOrientedDirection.left) {
+    if (direction == SpriteOrientedDirection.left &&
+        orientedDirection == SpriteOrientedDirection.right) {
+      orientedDirection = SpriteOrientedDirection.left;
       // flip sprite
       angle = 3.14;
+      flipVertically();
+    }
+
+    if (direction == SpriteOrientedDirection.right &&
+        orientedDirection == SpriteOrientedDirection.left) {
+      orientedDirection = SpriteOrientedDirection.right;
+      angle = 0;
       flipVertically();
     }
   }
