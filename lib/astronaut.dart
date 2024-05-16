@@ -1,19 +1,24 @@
 import 'package:flame/components.dart';
+import 'package:gravity_guy/body_with_mass.dart';
 import 'package:gravity_guy/main.dart';
 
 enum SpriteOrientedDirection { left, right }
 
-class Astronaut extends SpriteAnimationComponent
+class Astronaut extends BodyWithMass
     with HasGameRef<GravityGuyGame>, KeyboardHandler {
-  Astronaut()
-      : super(
-          size: Vector2(50, 50),
-          anchor: Anchor.center,
-        );
-
   bool isWalking = false;
 
+  Vector2 accelerationDueToGravity = Vector2(0, 100);
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
+
+  // size of astronaut is 50x50
+
+  Astronaut()
+      : super(
+            mass: 1,
+            anchor: Anchor.center,
+            velocity: Vector2(0, 0),
+            acceleration: Vector2(0, 0));
 
   changeDirection(SpriteOrientedDirection direction) {
     if (direction == SpriteOrientedDirection.left &&
@@ -30,6 +35,10 @@ class Astronaut extends SpriteAnimationComponent
       angle = 0;
       flipVertically();
     }
+  }
+
+  void jump() {
+    velocity = Vector2(0, -100);
   }
 
   @override
@@ -59,6 +68,10 @@ class Astronaut extends SpriteAnimationComponent
     } else {
       playing = false;
     }
+
+    position += velocity * dt;
+
+    velocity += accelerationDueToGravity * dt;
 
     // if (walkDirection == WalkDirection.left) {
     //

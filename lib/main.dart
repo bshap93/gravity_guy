@@ -13,7 +13,8 @@ void main() {
   runApp(GameWidget(game: game));
 }
 
-class GravityGuyGame extends FlameGame with KeyboardEvents {
+class GravityGuyGame extends FlameGame
+    with KeyboardEvents, HasCollisionDetection {
   static const double starterPlanetRadius = 250.00;
   static const double starterPlanetMass = 10000; // KG ??
   @override
@@ -47,7 +48,16 @@ class GravityGuyGame extends FlameGame with KeyboardEvents {
     final isArrowLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final wasArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
-    final isKeySpace = keysPressed.contains(LogicalKeyboardKey.space);
+    final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
+
+    if (wasKeySpace && isKeyDown) {
+      final astronaut = world.children.firstWhere(
+        (element) => element is Astronaut,
+      ) as Astronaut;
+      // astronaut.velocity = Vector2(0, -100);
+      astronaut.jump();
+      return KeyEventResult.handled;
+    }
 
     if (isArrowRight && isKeyDown) {
       // astronaut is walking
