@@ -1,24 +1,25 @@
 import 'package:flame/components.dart';
-import 'package:gravity_guy/body_with_mass.dart';
 import 'package:gravity_guy/main.dart';
 
 enum SpriteOrientedDirection { left, right }
 
-class Astronaut extends BodyWithMass
+class Astronaut extends SpriteAnimationComponent
     with HasGameRef<GravityGuyGame>, KeyboardHandler {
   bool isWalking = false;
 
   Vector2 accelerationDueToGravity = Vector2(0, 100);
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
+  Vector2 velocity = Vector2.zero();
 
   // size of astronaut is 50x50
 
   Astronaut()
       : super(
-            mass: 1,
-            anchor: Anchor.center,
-            velocity: Vector2(0, 0),
-            acceleration: Vector2(0, 0));
+          size: Vector2(29, 37),
+          anchor: Anchor.center,
+          position: Vector2(500, 225),
+          angle: 0,
+        );
 
   changeDirection(SpriteOrientedDirection direction) {
     if (direction == SpriteOrientedDirection.left &&
