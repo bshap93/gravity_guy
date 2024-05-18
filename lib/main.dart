@@ -23,7 +23,8 @@ class GravityGuyGame extends FlameGame
     final planet = Planet(
       radius: starterPlanetRadius,
       mass: starterPlanetMass,
-      offset: const Offset(500, 500),
+      offset: const Offset(0, 0),
+      positionVector: Vector2(500, 500),
     );
 
     world.add(planet);
@@ -50,15 +51,6 @@ class GravityGuyGame extends FlameGame
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
 
-    if (wasKeySpace && isKeyDown) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is Astronaut,
-      ) as Astronaut;
-      // astronaut.velocity = Vector2(0, -100);
-      astronaut.jump();
-      return KeyEventResult.handled;
-    }
-
     if (isArrowRight && isKeyDown) {
       // astronaut is walking
       final astronaut = world.children.firstWhere(
@@ -69,11 +61,21 @@ class GravityGuyGame extends FlameGame
       return KeyEventResult.handled;
     }
 
+    if (wasKeySpace && isKeyDown) {
+      final astronaut = world.children.firstWhere(
+        (element) => element is Astronaut,
+      ) as Astronaut;
+      // astronaut.velocity = Vector2(0, -100);
+      astronaut.jump();
+      return KeyEventResult.handled;
+    }
+
     if (wasArrowRight && isKeyUp) {
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
       astronaut.isWalking = false;
+      astronaut.boundInDirection(BoundingDirection.right);
       return KeyEventResult.handled;
     }
 
