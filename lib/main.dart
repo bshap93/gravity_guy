@@ -51,13 +51,39 @@ class GravityGuyGame extends FlameGame
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
 
+    /// Player presses down the right arrow key
+    /// The astronaut bounds to the right if it is touching the planet
     if (isArrowRight && isKeyDown) {
       // astronaut is walking
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
+
+      if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
+        astronaut.changeDirection(SpriteOrientedDirection.right);
+      }
       astronaut.isWalking = true;
-      astronaut.changeDirection(SpriteOrientedDirection.right);
+
+      if (astronaut.astronautIsTouchingPlanet) {
+        astronaut.boundInDirection(BoundingDirection.right);
+      }
+      return KeyEventResult.handled;
+    }
+
+    /// Player presses down the left arrow key
+    /// The astronaut bounds to the left if it is touching the planet
+    if (isKeyDown && isArrowLeft) {
+      final astronaut = world.children.firstWhere(
+        (element) => element is Astronaut,
+      ) as Astronaut;
+      if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
+        astronaut.changeDirection(SpriteOrientedDirection.left);
+      }
+      astronaut.isWalking = true;
+
+      if (astronaut.astronautIsTouchingPlanet) {
+        astronaut.boundInDirection(BoundingDirection.left);
+      }
       return KeyEventResult.handled;
     }
 
@@ -65,7 +91,6 @@ class GravityGuyGame extends FlameGame
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
-      // astronaut.velocity = Vector2(0, -100);
       astronaut.jump();
       return KeyEventResult.handled;
     }
@@ -75,19 +100,24 @@ class GravityGuyGame extends FlameGame
         (element) => element is Astronaut,
       ) as Astronaut;
       astronaut.isWalking = false;
-      astronaut.boundInDirection(BoundingDirection.right);
+
       return KeyEventResult.handled;
     }
 
+    /// Player presses down the left arrow key
+    /// The astronaut bounds to the left if it is touching the planet
     if (isKeyDown && isArrowLeft) {
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
-      if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
-        return KeyEventResult.ignored;
+      if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
+        astronaut.changeDirection(SpriteOrientedDirection.left);
       }
       astronaut.isWalking = true;
-      astronaut.changeDirection(SpriteOrientedDirection.left);
+
+      if (astronaut.astronautIsTouchingPlanet) {
+        astronaut.boundInDirection(BoundingDirection.left);
+      }
       return KeyEventResult.handled;
     }
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:gravity_guy/main.dart';
@@ -10,6 +12,7 @@ enum BoundingDirection { right, left }
 class Astronaut extends SpriteAnimationComponent
     with HasGameRef<GravityGuyGame>, KeyboardHandler, CollisionCallbacks {
   bool isWalking = false;
+  bool astronautIsTouchingPlanet = false;
 
   Vector2 accelerationDueToGravity = Vector2(0, 100);
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
@@ -31,16 +34,13 @@ class Astronaut extends SpriteAnimationComponent
     if (direction == SpriteOrientedDirection.left &&
         orientedDirection == SpriteOrientedDirection.right) {
       orientedDirection = SpriteOrientedDirection.left;
-      // flip sprite
-      angle = 3.14;
-      flipVertically();
+      flipHorizontally();
     }
 
     if (direction == SpriteOrientedDirection.right &&
         orientedDirection == SpriteOrientedDirection.left) {
       orientedDirection = SpriteOrientedDirection.right;
-      angle = 0;
-      flipVertically();
+      flipHorizontally();
     }
   }
 
@@ -63,13 +63,15 @@ class Astronaut extends SpriteAnimationComponent
     final gravityDirection = planet.position - position;
 
     // perpendicular direction
-    final velocityChangeDirection = gravityDirection.perpendicular();
+    final velocityChangeDirection = -(gravityDirection.perpendicular());
 
     if (boundingDirection == BoundingDirection.right) {
       velocity += velocityChangeDirection.normalized() * 100;
     }
 
-    if (boundingDirection == BoundingDirection.left) {}
+    if (boundingDirection == BoundingDirection.left) {
+      velocity -= velocityChangeDirection.normalized() * 100;
+    }
   }
 
   @override
@@ -89,10 +91,12 @@ class Astronaut extends SpriteAnimationComponent
     playing = false;
     // angle = 0;
     // stop animation
-    add(RectangleHitbox(
-      size: size,
+    add(CircleHitbox(
+      // This *2 was a sorta hack way to have him collide with the planet
+      // at his feet, but it's not perfect.
+      radius: 50,
       position: Vector2(0, 0),
-      anchor: Anchor.topCenter,
+      anchor: Anchor.center,
     ));
   }
 
@@ -117,29 +121,33 @@ class Astronaut extends SpriteAnimationComponent
     accelerationDueToGravity = direction.normalized() * 100;
 
     velocity += accelerationDueToGravity * dt;
+
+    final newAngle = Vector2ToRadian(direction);
+
+    angle = newAngle;
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is Planet) {
-      final planet = other;
-
       velocity = Vector2.zero();
-
-      // velocity -= direction.normalized() * velocity.length;
-
-      // velocity = Vector2.zero();
-      // set velocity with respect to planet to zero
-      // calculate new velocity
-      // final distance = planet.position - position;
-      // final distanceMagnitude = distance.length;
-      // final force =
-      //     (1000 * mass * planet.mass) / (distanceMagnitude * distanceMagnitude);
-      // final forceVector = distance.normalized() * force;
-      // velocity = forceVector / mass;
+      astronautIsTouchingPlanet = true;
     }
   }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    super.onCollisionEnd(other);
+    if (other is Planet) {
+      astronautIsTouchingPlanet = false;
+    }
+  }
+}
+
+double Vector2ToRadian(Vector2 direction) {
+  double angle = 2 * pi - atan2(direction.x, direction.y);
+  return angle;
 }
 
 extension Vector2Extension on Vector2 {
