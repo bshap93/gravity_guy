@@ -2,10 +2,13 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:gravity_guy/astronaut.dart';
 import 'package:gravity_guy/body_with_mass.dart';
+import 'package:gravity_guy/main.dart';
 
-class Planet extends PositionComponent with BodyWithMass, CollisionCallbacks {
+class Planet extends PositionComponent
+    with BodyWithMass, CollisionCallbacks, HasGameRef<GravityGuyGame> {
   Planet({
     required this.radius,
     required this.mass,
@@ -29,7 +32,11 @@ class Planet extends PositionComponent with BodyWithMass, CollisionCallbacks {
   }
 
   @override
-  void onLoad() {
+  Future<void> onLoad() async {
+    add(SpriteComponent(
+        sprite: Sprite(await Flame.images.load('planet1.png')),
+        anchor: Anchor.center,
+        size: Vector2(radius * 3.25, radius * 3.25)));
     add(CircleHitbox(
       radius: radius,
       anchor: Anchor.center,

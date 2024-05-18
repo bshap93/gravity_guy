@@ -19,6 +19,7 @@ class Astronaut extends SpriteAnimationComponent
   Vector2 velocity = Vector2.zero();
   // mass
   double mass = 1;
+  Vector2 initialPosition = Vector2(500, 225);
 
   // size of astronaut is 50x50
 
@@ -26,9 +27,62 @@ class Astronaut extends SpriteAnimationComponent
       : super(
           size: Vector2(50, 50),
           anchor: Anchor.center,
-          position: Vector2(500, 225),
           angle: 0,
         );
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    animation = await game.loadSpriteAnimation(
+        'astronaut3.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(29, 37),
+        ));
+
+    // sprite = await gameRef.loadSprite('astronaut3.png');
+    position = initialPosition;
+    playing = false;
+    // angle = 0;
+    // stop animation
+    add(CircleHitbox(
+      // This *2 was a sorta hack way to have him collide with the planet
+      // at his feet, but it's not perfect.
+      radius: 50,
+      position: Vector2(0, 0),
+      anchor: Anchor.center,
+    ));
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (isWalking) {
+      playing = true;
+    } else {
+      playing = false;
+    }
+
+    position += velocity * dt;
+
+    final planet = gameRef.world.children.firstWhere(
+      (element) => element is Planet,
+    ) as Planet;
+
+    final direction = planet.position - position;
+
+    // velocity goes toward planet
+    accelerationDueToGravity = direction.normalized() * 100;
+
+    velocity += accelerationDueToGravity * dt;
+
+    final newAngle = Vector2ToRadian(direction);
+
+    angle = newAngle;
+    game.camera.viewfinder.angle = newAngle;
+  }
 
   changeDirection(SpriteOrientedDirection direction) {
     if (direction == SpriteOrientedDirection.left &&
@@ -72,59 +126,6 @@ class Astronaut extends SpriteAnimationComponent
     if (boundingDirection == BoundingDirection.left) {
       velocity -= velocityChangeDirection.normalized() * 100;
     }
-  }
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    animation = await game.loadSpriteAnimation(
-        'astronaut3.png',
-        SpriteAnimationData.sequenced(
-          amount: 3,
-          stepTime: 0.1,
-          textureSize: Vector2(29, 37),
-        ));
-
-    // sprite = await gameRef.loadSprite('astronaut3.png');
-    position = Vector2(500, 225);
-    playing = false;
-    // angle = 0;
-    // stop animation
-    add(CircleHitbox(
-      // This *2 was a sorta hack way to have him collide with the planet
-      // at his feet, but it's not perfect.
-      radius: 50,
-      position: Vector2(0, 0),
-      anchor: Anchor.center,
-    ));
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (isWalking) {
-      playing = true;
-    } else {
-      playing = false;
-    }
-
-    position += velocity * dt;
-
-    final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
-
-    final direction = planet.position - position;
-
-    // velocity goes toward planet
-    accelerationDueToGravity = direction.normalized() * 100;
-
-    velocity += accelerationDueToGravity * dt;
-
-    final newAngle = Vector2ToRadian(direction);
-
-    angle = newAngle;
   }
 
   @override
