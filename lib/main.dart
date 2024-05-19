@@ -4,10 +4,10 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gravity_guy/planet.dart';
-import 'package:gravity_guy/space_ship.dart';
+import 'package:gravity_guy/controllable_components/space_ship.dart';
+import 'package:gravity_guy/environment_components/planet.dart';
 
-import 'astronaut.dart';
+import 'controllable_components/astronaut.dart';
 
 void main() {
   final game = GravityGuyGame();
@@ -23,12 +23,22 @@ class GravityGuyGame extends FlameGame
     await Flame.images.load('astronaut3.png');
     await Flame.images.load('planet1.png');
     await Flame.images.load('spaceShip1.png');
+    // await Flame.images.load('spr_stars02.png');
+
+    final background1 = SpriteComponent(
+      sprite: Sprite(await Flame.images.load('spr_stars02.png')),
+      size: size * 3,
+      anchor: Anchor.center,
+    );
+
     final planet = Planet(
       radius: starterPlanetRadius,
       mass: starterPlanetMass,
       offset: const Offset(0, 0),
       positionVector: Vector2(500, 500),
     );
+
+    planet.add(background1);
 
     world.add(planet);
 
