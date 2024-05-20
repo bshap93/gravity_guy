@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:gravity_guy/controllable_components/astronaut.dart';
 import 'package:gravity_guy/main.dart';
 
 class Planet extends PositionComponent
@@ -43,13 +42,5 @@ class Planet extends PositionComponent
       anchor: Anchor.center,
       position: Vector2(offset.dx, offset.dy),
     ));
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    if (other is Astronaut) {
-      //
-    }
   }
 }

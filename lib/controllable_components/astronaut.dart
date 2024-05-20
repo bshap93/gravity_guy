@@ -18,7 +18,6 @@ class Astronaut extends SpriteAnimationComponent
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
   Vector2 velocity = Vector2.zero();
   // mass
-  double mass = 1;
   Vector2 initialPosition = Vector2(500, 225);
   double boundingSpeed = 165;
   double jumpSpeed = 60;

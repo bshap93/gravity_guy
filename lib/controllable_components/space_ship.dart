@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:gravity_guy/main.dart';
 import 'package:gravity_guy/ui_components/interaction_text.dart';
 
+import '../environment_components/planet.dart';
 import 'astronaut.dart';
 
 class SpaceShip extends SpriteAnimationComponent
@@ -14,7 +15,11 @@ class SpaceShip extends SpriteAnimationComponent
   double lengthAcross = 75;
   bool isTouchedByAstronaut = false;
 
+  Vector2 velocity = Vector2.zero();
+  Vector2 acceleration = Vector2.zero();
+
   bool isFlying = false;
+  bool isOccupied = false;
 
   InteractionText enterSpaceShipText = InteractionText(
       positionVector: Vector2(500, 900), text: 'Press X to enter');
@@ -48,6 +53,13 @@ class SpaceShip extends SpriteAnimationComponent
     ));
   }
 
+  void acceptAstronaut() {
+    isOccupied = true;
+    isFlying = true;
+    game.canGuyEnterShip = false;
+    game.isGuyOutsideShip = false;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
@@ -56,6 +68,20 @@ class SpaceShip extends SpriteAnimationComponent
     } else {
       playing = false;
     }
+
+    position += velocity * dt;
+
+    velocity += acceleration * dt;
+  }
+
+  void blastOff() {
+    final planet = gameRef.world.children.firstWhere(
+      (element) => element is Planet,
+    ) as Planet;
+    final gravityDirection = planet.position - position;
+
+    velocity -= gravityDirection.normalized() * 100;
+    game.camera.viewfinder.position = position;
   }
 
   @override
@@ -64,6 +90,7 @@ class SpaceShip extends SpriteAnimationComponent
     if (other is Astronaut) {
       isTouchedByAstronaut = true;
       add(enterSpaceShipText);
+      game.canGuyEnterShip = true;
     }
   }
 
@@ -72,6 +99,7 @@ class SpaceShip extends SpriteAnimationComponent
     super.onCollisionEnd(other);
     if (other is Astronaut) {
       remove(enterSpaceShipText);
+      game.canGuyEnterShip = false;
     }
   }
 }
