@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/sprite.dart';
 import 'package:gravity_guy/environment_components/planet.dart';
 import 'package:gravity_guy/main.dart';
 
@@ -13,14 +14,18 @@ class Astronaut extends SpriteAnimationComponent
     with HasGameRef<GravityGuyGame>, KeyboardHandler, CollisionCallbacks {
   bool isWalking = false;
   bool astronautIsTouchingPlanet = false;
+  bool ignorePlanetCollision = false;
 
   Vector2 accelerationDueToGravity = Vector2(0, 100);
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
   Vector2 velocity = Vector2.zero();
   // mass
   Vector2 initialPosition = Vector2(500, 225);
-  double boundingSpeed = 165;
+  double boundingSpeed = 157;
   double jumpSpeed = 60;
+
+  late SpriteSheet spriteSheet;
+  late SpriteAnimation stationaryAnimation;
 
   // size of astronaut is 50x50
 
@@ -35,17 +40,24 @@ class Astronaut extends SpriteAnimationComponent
   Future<void> onLoad() async {
     await super.onLoad();
 
-    animation = await game.loadSpriteAnimation(
-        'astronaut3.png',
-        SpriteAnimationData.sequenced(
-          amount: 3,
-          stepTime: 0.1,
-          textureSize: Vector2(29, 37),
-        ));
+    spriteSheet = SpriteSheet(
+      image: await gameRef.images.load('astronaut4.png'),
+      srcSize: Vector2(32, 32),
+    );
+
+    stationaryAnimation = SpriteAnimation.fromFrameData(
+        spriteSheet.image,
+        SpriteAnimationData([
+          spriteSheet.createFrameData(0, 0, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 1, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 2, stepTime: 0.3),
+        ]));
+
+    animation = stationaryAnimation;
 
     // sprite = await gameRef.loadSprite('astronaut3.png');
     position = initialPosition;
-    playing = false;
+    playing = true;
     // angle = 0;
     // stop animation
     add(CircleHitbox(
@@ -60,11 +72,13 @@ class Astronaut extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
-    if (isWalking) {
-      playing = true;
-    } else {
-      playing = false;
-    }
+    // if (isWalking) {
+    //   playing = false;
+    //   // TODO - add walking animation
+    //   // animation = walkingAnimation;
+    // } else {
+    //   playing = false;
+    // }
 
     position += velocity * dt;
 
@@ -75,7 +89,11 @@ class Astronaut extends SpriteAnimationComponent
     final direction = planet.position - position;
 
     // velocity goes toward planet
-    accelerationDueToGravity = direction.normalized() * 100;
+    if (!ignorePlanetCollision) {
+      accelerationDueToGravity = direction.normalized() * 100;
+    } else {
+      accelerationDueToGravity = Vector2.zero();
+    }
 
     velocity += accelerationDueToGravity * dt;
 
@@ -99,42 +117,90 @@ class Astronaut extends SpriteAnimationComponent
     }
   }
 
-  void jump() {
+  void jumpAwayFromPlanet() {
     // jump away from planet
     final planet = gameRef.world.children.firstWhere(
       (element) => element is Planet,
     ) as Planet;
     final direction = position - planet.position; // direction away from planet
     velocity = direction.normalized() * jumpSpeed;
+    ignorePlanetCollision = false;
   }
 
   void boundInDirection(BoundingDirection boundingDirection) {
-    final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
+    ignorePlanetCollision = true;
+    executePreJumpSequence(boundingDirection);
 
-    jump();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      jumpAwayFromPlanet();
 
-    final gravityDirection = planet.position - position;
+      final duringJumpAnimation = SpriteAnimation.fromFrameData(
+          spriteSheet.image,
+          SpriteAnimationData([
+            spriteSheet.createFrameData(0, 9, stepTime: 0.3),
+            spriteSheet.createFrameData(0, 8, stepTime: 0.3),
+          ]));
 
-    // perpendicular direction
-    final velocityChangeDirection = -(gravityDirection.perpendicular());
+      animation = duringJumpAnimation;
+
+      final velocityChangeDirection = getVelocityChangeDirection();
+
+      if (boundingDirection == BoundingDirection.right) {
+        velocity += velocityChangeDirection.normalized() * boundingSpeed;
+      }
+
+      if (boundingDirection == BoundingDirection.left) {
+        velocity -= velocityChangeDirection.normalized() * boundingSpeed;
+      }
+    });
+  }
+
+  void executePreJumpSequence(BoundingDirection boundingDirection) {
+    ignorePlanetCollision = true;
+    final preJumpAnimation = SpriteAnimation.fromFrameData(
+        spriteSheet.image,
+        SpriteAnimationData([
+          spriteSheet.createFrameData(0, 0, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 3, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 5, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 6, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 7, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 8, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 9, stepTime: 0.3),
+        ]));
+
+    animation = preJumpAnimation;
+
+    // final gravityDirection = planet.position - position;
+    final velocityChangeDirection = getVelocityChangeDirection();
 
     if (boundingDirection == BoundingDirection.right) {
-      velocity += velocityChangeDirection.normalized() * boundingSpeed;
+      velocity += velocityChangeDirection.normalized() * 20;
     }
 
     if (boundingDirection == BoundingDirection.left) {
-      velocity -= velocityChangeDirection.normalized() * boundingSpeed;
+      velocity -= velocityChangeDirection.normalized() * 20;
     }
+  }
+
+  Vector2 getVelocityChangeDirection() {
+    final planet = gameRef.world.children.firstWhere(
+      (element) => element is Planet,
+    ) as Planet;
+    final gravityDirection = planet.position - position;
+
+    // perpendicular direction
+    return -(gravityDirection.perpendicular());
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is Planet) {
-      velocity = Vector2.zero();
-      astronautIsTouchingPlanet = true;
+      if (!ignorePlanetCollision) {
+        velocity = Vector2.zero();
+        astronautIsTouchingPlanet = true;
+      }
     }
   }
 

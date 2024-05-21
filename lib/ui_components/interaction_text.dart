@@ -3,20 +3,6 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// final interactionText = AlignComponent(
-//   alignment: Anchor.topRight,
-//   child: TextComponent(
-//     text: 'Space Ship',
-//     anchor: Anchor.topRight,
-//     textRenderer: TextPaint(
-//         style: GoogleFonts.getFont('Nabla').copyWith(
-//           color: const Color(0xFFD9BB26),
-//           fontSize: 32,
-//         ),
-//         textDirection: TextDirection.ltr),
-//   ),
-// );
-
 class InteractionText extends TextComponent {
   InteractionText({
     required Vector2 positionVector,
