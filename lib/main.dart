@@ -26,7 +26,7 @@ class GravityGuyGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await Flame.images.load('astronaut3.png');
+    await Flame.images.load('astronaut4.png');
     await Flame.images.load('planet1.png');
     await Flame.images.load('spaceShip1.png');
     await Flame.images.load('spr_stars02.png');
@@ -164,7 +164,7 @@ class GravityGuyGame extends FlameGame
       final astronaut = world.children.firstWhere(
         (element) => element is Astronaut,
       ) as Astronaut;
-      astronaut.jump();
+      astronaut.jumpAwayFromPlanet();
       return KeyEventResult.handled;
     }
 

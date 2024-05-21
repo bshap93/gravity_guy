@@ -3,6 +3,7 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/flutter
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.json
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut3.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/planet1.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/rock_type_planet.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spaceShip1.png
