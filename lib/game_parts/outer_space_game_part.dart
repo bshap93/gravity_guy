@@ -1,17 +1,15 @@
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/planet.dart';
 
-class OuterSpaceGamePart extends FlameGame
-    with KeyboardEvents, HasCollisionDetection {
+class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 250.00;
   static const double starterPlanetMass = 10000; // KG ??
 
