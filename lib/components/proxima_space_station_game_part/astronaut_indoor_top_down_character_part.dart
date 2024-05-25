@@ -83,8 +83,6 @@ class AstronautIndoorTopDownCharacterPart extends Astronaut {
         if (!hitBottomBarrier) {
           walkingDirection = WalkingDirection.down;
           velocity = Vector2(0, 100);
-        } else {
-          velocity = Vector2.zero();
         }
         break;
       case WalkingDirection.left:
