@@ -120,39 +120,20 @@ class OuterSpaceGamePart extends GamePart {
     /// Player presses down the right arrow key
     /// The astronaut bounds to the right if it is touching the planet
     if (isArrowRight && isKeyDown && isGuyOutsideShip) {
-      // astronaut is walking
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
+      // boundRightOverview();
+      walkRightOverview();
 
-      if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
-        astronaut.changeDirection(SpriteOrientedDirection.right);
-      }
-      astronaut.isWalking = true;
-
-      if (astronaut.astronautIsTouchingPlanet) {
-        astronaut.boundInDirection(BoundingDirection.right);
-      }
       return KeyEventResult.handled;
     }
 
     /// Player presses down the left arrow key
     /// The astronaut bounds to the left if it is touching the planet
     if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
-      if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
-        astronaut.changeDirection(SpriteOrientedDirection.left);
-      }
-      astronaut.isWalking = true;
-
-      if (astronaut.astronautIsTouchingPlanet) {
-        astronaut.boundInDirection(BoundingDirection.left);
-      }
+      boundLeftOverview();
       return KeyEventResult.handled;
     }
 
+    /// Player presses down the space key
     if (wasKeySpace && isKeyDown && isGuyOutsideShip) {
       final astronaut = world.children.firstWhere(
         (element) => element is AstronautOutdoorCharacterPart,
@@ -173,17 +154,7 @@ class OuterSpaceGamePart extends GamePart {
     /// Player presses down the left arrow key
     /// The astronaut bounds to the left if it is touching the planet
     if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
-      if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
-        astronaut.changeDirection(SpriteOrientedDirection.left);
-      }
-      astronaut.isWalking = true;
-
-      if (astronaut.astronautIsTouchingPlanet) {
-        astronaut.boundInDirection(BoundingDirection.left);
-      }
+      boundLeftOverview();
       return KeyEventResult.handled;
     }
 
@@ -196,5 +167,51 @@ class OuterSpaceGamePart extends GamePart {
     }
 
     return KeyEventResult.ignored;
+  }
+
+  void walkRightOverview() {
+    // astronaut is walking
+    final astronaut = world.children.firstWhere(
+      (element) => element is AstronautOutdoorCharacterPart,
+    ) as AstronautOutdoorCharacterPart;
+    if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
+      astronaut.changeDirection(SpriteOrientedDirection.right);
+    }
+    astronaut.isWalking = true;
+
+    if (astronaut.astronautIsTouchingPlanet) {
+      astronaut.walkInDirection(BoundingDirection.right);
+    }
+  }
+
+  void boundRightOverview() {
+    // astronaut is walking
+    final astronaut = world.children.firstWhere(
+      (element) => element is AstronautOutdoorCharacterPart,
+    ) as AstronautOutdoorCharacterPart;
+
+    if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
+      astronaut.changeDirection(SpriteOrientedDirection.right);
+    }
+    astronaut.isWalking = true;
+
+    if (astronaut.astronautIsTouchingPlanet) {
+      astronaut.boundInDirection(BoundingDirection.right);
+    }
+  }
+
+  void boundLeftOverview() {
+    // astronaut is walking
+    final astronaut = world.children.firstWhere(
+      (element) => element is AstronautOutdoorCharacterPart,
+    ) as AstronautOutdoorCharacterPart;
+    if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
+      astronaut.changeDirection(SpriteOrientedDirection.left);
+    }
+    astronaut.isWalking = true;
+
+    if (astronaut.astronautIsTouchingPlanet) {
+      astronaut.boundInDirection(BoundingDirection.left);
+    }
   }
 }

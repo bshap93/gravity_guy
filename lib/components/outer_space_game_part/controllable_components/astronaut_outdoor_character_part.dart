@@ -23,6 +23,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   // mass
   Vector2 initialPosition = Vector2(500, 225);
   double boundingSpeed = 157;
+  double walkingSpeed = 100;
   double jumpSpeed = 60;
 
   late SpriteSheet spriteSheet;
@@ -126,6 +127,25 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     final direction = position - planet.position; // direction away from planet
     velocity = direction.normalized() * jumpSpeed;
     ignorePlanetCollision = false;
+  }
+
+  void walkInDirection(BoundingDirection right) {
+    ignorePlanetCollision = true;
+    final walkingAnimation = SpriteAnimation.fromFrameData(
+        spriteSheet.image,
+        SpriteAnimationData([
+          spriteSheet.createFrameData(0, 0, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 1, stepTime: 0.3),
+          spriteSheet.createFrameData(0, 2, stepTime: 0.3),
+        ]));
+
+    animation = walkingAnimation;
+
+    final velocityChangeDirection = getVelocityChangeDirection();
+
+    if (right == BoundingDirection.right) {
+      position += velocityChangeDirection.normalized() * walkingSpeed;
+    }
   }
 
   void boundInDirection(BoundingDirection boundingDirection) {
