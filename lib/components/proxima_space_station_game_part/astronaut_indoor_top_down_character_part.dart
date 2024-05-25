@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:gravity_guy/game_parts/proxima_space_station_game_part.dart';
 
 import '../inherited_components/astronaut.dart';
 import 'bottom_map_proxima_space_station.dart';
@@ -18,7 +17,7 @@ class AstronautIndoorTopDownCharacterPart extends Astronaut {
   bool hitTopBarrier = false;
   bool hitBottomBarrier = false;
 
-  WalkingDirection walkingDirection = WalkingDirection.right;
+  late WalkingDirection walkingDirection;
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -71,31 +70,34 @@ class AstronautIndoorTopDownCharacterPart extends Astronaut {
   }
 
   void walk(WalkingDirection direction) {
-    final mapWidth = (gameRef as ProximaSpaceStationGamePart).mapWidth;
-    final mapHeight = (gameRef as ProximaSpaceStationGamePart).mapHeight;
-
     switch (direction) {
       case WalkingDirection.up:
         // The astronaut is not allowed to go above the top boundary
-        if (position.y > tileWidth * 5.0 && !hitTopBarrier) {
+        walkingDirection = WalkingDirection.up;
+        if (!hitTopBarrier) {
           velocity = Vector2(0, -100);
         }
         break;
       case WalkingDirection.down:
         // The astronaut is not allowed to go below the bottom boundary
-        if (position.y < mapHeight - tileWidth && !hitBottomBarrier) {
+        if (!hitBottomBarrier) {
+          walkingDirection = WalkingDirection.down;
           velocity = Vector2(0, 100);
+        } else {
+          velocity = Vector2.zero();
         }
         break;
       case WalkingDirection.left:
-        if (position.x > tileWidth && !hitLeftBarrier) {
+        walkingDirection = WalkingDirection.left;
+        if (!hitLeftBarrier) {
           velocity = Vector2(-100, 0);
         }
 
         break;
 
       case WalkingDirection.right:
-        if (position.x < mapWidth - tileWidth && !hitRightBarrier) {
+        walkingDirection = WalkingDirection.right;
+        if (!hitRightBarrier) {
           velocity = Vector2(100, 0);
         }
         break;
