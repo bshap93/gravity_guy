@@ -130,7 +130,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   }
 
   void walkInDirection(BoundingDirection right) {
-    ignorePlanetCollision = true;
+    // ignorePlanetCollision = true;
     final walkingAnimation = SpriteAnimation.fromFrameData(
         spriteSheet.image,
         SpriteAnimationData([
@@ -144,7 +144,8 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     final velocityChangeDirection = getVelocityChangeDirection();
 
     if (right == BoundingDirection.right) {
-      position += velocityChangeDirection.normalized() * walkingSpeed;
+      velocity += velocityChangeDirection.normalized() * walkingSpeed * 2;
+      position -= velocityChangeDirection.normalized().perpendicular() * 0.5;
     }
   }
 
@@ -219,7 +220,9 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     super.onCollision(intersectionPoints, other);
     if (other is Planet) {
       if (!ignorePlanetCollision) {
+        // velocity is ze
         velocity = Vector2.zero();
+        animation = stationaryAnimation;
         astronautIsTouchingPlanet = true;
       }
     }

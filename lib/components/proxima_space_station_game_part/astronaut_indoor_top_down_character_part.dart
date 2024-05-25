@@ -42,4 +42,45 @@ class AstronautIndoorTopDownCharacterPart extends Astronaut {
       velocity = Vector2.zero();
     }
   }
+
+  void walk(WalkingDirection direction) {
+    switch (direction) {
+      case WalkingDirection.up:
+        velocity = Vector2(0, -100);
+        break;
+      case WalkingDirection.down:
+        velocity = Vector2(0, 100);
+        break;
+      case WalkingDirection.left:
+        velocity = Vector2(-100, 0);
+        break;
+      case WalkingDirection.upLeft:
+        velocity = Vector2(-100, -100);
+        break;
+      case WalkingDirection.upRight:
+        velocity = Vector2(100, -100);
+        break;
+      case WalkingDirection.downLeft:
+        velocity = Vector2(-100, 100);
+        break;
+      case WalkingDirection.downRight:
+        velocity = Vector2(100, 100);
+        break;
+
+      case WalkingDirection.right:
+        velocity = Vector2(100, 0);
+        break;
+    }
+  }
+}
+
+enum WalkingDirection {
+  up,
+  down,
+  left,
+  right,
+  upLeft,
+  upRight,
+  downLeft,
+  downRight,
 }

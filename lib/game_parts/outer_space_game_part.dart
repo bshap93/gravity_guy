@@ -119,10 +119,10 @@ class OuterSpaceGamePart extends GamePart {
 
     /// Player presses down the right arrow key
     /// The astronaut bounds to the right if it is touching the planet
-    if (isArrowRight && isKeyDown && isGuyOutsideShip) {
-      // boundRightOverview();
-      walkRightOverview();
-
+    if (isArrowRight && isGuyOutsideShip) {
+      boundRightOverview();
+      // walkRightOverview();
+      //
       return KeyEventResult.handled;
     }
 
@@ -169,20 +169,20 @@ class OuterSpaceGamePart extends GamePart {
     return KeyEventResult.ignored;
   }
 
-  void walkRightOverview() {
-    // astronaut is walking
-    final astronaut = world.children.firstWhere(
-      (element) => element is AstronautOutdoorCharacterPart,
-    ) as AstronautOutdoorCharacterPart;
-    if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
-      astronaut.changeDirection(SpriteOrientedDirection.right);
-    }
-    astronaut.isWalking = true;
-
-    if (astronaut.astronautIsTouchingPlanet) {
-      astronaut.walkInDirection(BoundingDirection.right);
-    }
-  }
+  // void walkRightOverview() {
+  //   // astronaut is walking
+  //   final astronaut = world.children.firstWhere(
+  //     (element) => element is AstronautOutdoorCharacterPart,
+  //   ) as AstronautOutdoorCharacterPart;
+  //   if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
+  //     astronaut.changeDirection(SpriteOrientedDirection.right);
+  //   }
+  //   astronaut.isWalking = true;
+  //
+  //   if (astronaut.astronautIsTouchingPlanet) {
+  //     astronaut.walkInDirection(BoundingDirection.right);
+  //   }
+  // }
 
   void boundRightOverview() {
     // astronaut is walking
