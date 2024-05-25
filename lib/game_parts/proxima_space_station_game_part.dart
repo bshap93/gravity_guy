@@ -3,14 +3,15 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gravity_guy/components/inherited_components/game_part.dart';
-import 'package:gravity_guy/components/proxima_space_station_game_part/map_proxima_space_station.dart';
+import 'package:gravity_guy/components/proxima_space_station_game_part/bottom_map_proxima_space_station.dart';
 
 import '../components/proxima_space_station_game_part/astronaut_indoor_top_down_character_part.dart';
 
 class ProximaSpaceStationGamePart extends GamePart {
   double mapWidth = 0;
   double mapHeight = 0;
-  late MapProximaSpaceStation map;
+  double tileWidth = 32;
+  late BottomMapProximaSpaceStation bottomMap;
   @override
   Future<void> onLoad() async {
     final proximaLevelTiledComponent =
@@ -21,8 +22,8 @@ class ProximaSpaceStationGamePart extends GamePart {
     mapHeight = proximaLevelTiledComponent.tileMap.map.height *
         proximaLevelTiledComponent.tileMap.destTileSize.y;
 
-    map = MapProximaSpaceStation(
-        tileMapBackgroundComposite: proximaLevelTiledComponent,
+    bottomMap = BottomMapProximaSpaceStation(
+        tileMapBackgroundBottom: proximaLevelTiledComponent,
         mapWidth: mapWidth,
         mapHeight: mapHeight);
 
@@ -33,8 +34,9 @@ class ProximaSpaceStationGamePart extends GamePart {
       startingPosition: startingPosition,
     );
 
-    world.add(map);
+    world.add(bottomMap);
     world.add(astronaut);
+    // world.add(topMap);
 
     camera.viewfinder.visibleGameSize = Vector2(mapWidth / 2, mapHeight / 2);
     camera.follow(astronaut);
@@ -58,26 +60,24 @@ class ProximaSpaceStationGamePart extends GamePart {
       (element) => element is AstronautIndoorTopDownCharacterPart,
     ) as AstronautIndoorTopDownCharacterPart;
 
-    if (isArrowRight && isArrowUp) {
-      astronaut.velocity = Vector2(100, -100);
-    } else if (isArrowRight && isArrowDown) {
-      astronaut.velocity = Vector2(100, 100);
-    } else if (isArrowLeft && isArrowUp) {
-      astronaut.velocity = Vector2(-100, -100);
-    } else if (isArrowLeft && isArrowDown) {
-      astronaut.velocity = Vector2(-100, 100);
-    } else if (isArrowRight) {
-      astronaut.velocity = Vector2(100, 0);
+    if (isArrowRight) {
+      // The astronaut is not allowed to go beyond the right boundary
+      astronaut.walk(WalkingDirection.right);
     } else if (isArrowLeft) {
-      astronaut.velocity = Vector2(-100, 0);
+      astronaut.walk(WalkingDirection.left);
     } else if (isArrowUp) {
-      astronaut.velocity = Vector2(0, -100);
+      astronaut.walk(WalkingDirection.up);
     } else if (isArrowDown) {
-      astronaut.velocity = Vector2(0, 100);
+      astronaut.walk(WalkingDirection.down);
     } else {
       astronaut.velocity = Vector2.zero();
     }
 
     return KeyEventResult.handled;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
   }
 }
