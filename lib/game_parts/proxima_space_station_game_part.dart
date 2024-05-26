@@ -6,16 +6,21 @@ import 'package:gravity_guy/components/inherited_components/game_part.dart';
 import 'package:gravity_guy/components/proxima_space_station_game_part/bottom_map_proxima_space_station.dart';
 
 import '../components/proxima_space_station_game_part/astronaut_indoor_top_down_character_part.dart';
+import '../components/proxima_space_station_game_part/mid_room_beam_map_object.dart';
 
 class ProximaSpaceStationGamePart extends GamePart {
   double mapWidth = 0;
   double mapHeight = 0;
   double tileWidth = 32;
   late BottomMapProximaSpaceStation bottomMap;
+  late MidRoomBeamMapObject midRoomBeamObject;
   @override
   Future<void> onLoad() async {
     final proximaLevelTiledComponent =
-        await TiledComponent.load("control_room.tmx", Vector2.all(16));
+        await TiledComponent.load("control_room_bottom.tmx", Vector2.all(16));
+
+    final controlRoomMidroomBeamTiledComponent = await TiledComponent.load(
+        "control_room_midroom_beam.tmx", Vector2.all(16));
 
     mapWidth = proximaLevelTiledComponent.tileMap.map.width *
         proximaLevelTiledComponent.tileMap.destTileSize.x;
@@ -26,6 +31,12 @@ class ProximaSpaceStationGamePart extends GamePart {
         tileMapBackgroundBottom: proximaLevelTiledComponent,
         mapWidth: mapWidth,
         mapHeight: mapHeight);
+
+    midRoomBeamObject = MidRoomBeamMapObject(
+      tileObject: controlRoomMidroomBeamTiledComponent,
+      objectWidth: 32,
+      objectHeight: 32,
+    );
 
     final startingPosition =
         Vector2(mapWidth / 2 + 64, mapHeight / 2 + 128 + 32);

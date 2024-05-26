@@ -53,8 +53,8 @@ class BottomMapProximaSpaceStation extends PositionComponent
     lvl1RoomObstacleHitboxes = CompositeHitbox(children: [
       // Bottom
       RectangleHitbox(
-        size: Vector2(tileSize * 5, halfTileSize),
-        position: Vector2(mapWidth / 2 + halfTileSize * 9, tileSize * 12),
+        size: Vector2(tileSize * 2, halfTileSize),
+        position: Vector2(mapWidth / 2 + halfTileSize * 6, halfTileSize * 25),
         anchor: Anchor.center,
       ),
     ]);
