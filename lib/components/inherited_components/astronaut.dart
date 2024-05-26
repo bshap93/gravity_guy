@@ -43,6 +43,20 @@ class Astronaut extends SpriteAnimationComponent
     playing = true;
   }
 
+  changeDirection(SpriteOrientedDirection direction) {
+    if (direction == SpriteOrientedDirection.left &&
+        orientedDirection == SpriteOrientedDirection.right) {
+      orientedDirection = SpriteOrientedDirection.left;
+      flipHorizontally();
+    }
+
+    if (direction == SpriteOrientedDirection.right &&
+        orientedDirection == SpriteOrientedDirection.left) {
+      orientedDirection = SpriteOrientedDirection.right;
+      flipHorizontally();
+    }
+  }
+
   @override
   void update(double dt) {
     super.update(dt);

@@ -31,21 +31,23 @@ class ProximaSpaceStationGamePart extends GamePart {
         tileMapBackgroundBottom: proximaLevelTiledComponent,
         mapWidth: mapWidth,
         mapHeight: mapHeight);
+    final startingPosition = Vector2(264, 360);
+    final beamPositions = [
+      Vector2(150, 150),
+    ];
 
     midRoomBeamObject = MidRoomBeamMapObject(
       tileObject: controlRoomMidroomBeamTiledComponent,
-      objectWidth: 32,
-      objectHeight: 32,
+      startingPosition: beamPositions[0],
     );
-
-    final startingPosition =
-        Vector2(mapWidth / 2 + 64, mapHeight / 2 + 128 + 32);
 
     final astronaut = AstronautIndoorTopDownCharacterPart(
       startingPosition: startingPosition,
     );
 
     world.add(bottomMap);
+
+    world.add(midRoomBeamObject);
     world.add(astronaut);
     // world.add(topMap);
 
@@ -59,9 +61,6 @@ class ProximaSpaceStationGamePart extends GamePart {
     KeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
-    final isKeyDown = event is KeyDownEvent;
-    final isKeyUp = event is KeyUpEvent;
-
     final isArrowRight = keysPressed.contains(LogicalKeyboardKey.arrowRight);
     final isArrowLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isArrowUp = keysPressed.contains(LogicalKeyboardKey.arrowUp);
@@ -82,6 +81,7 @@ class ProximaSpaceStationGamePart extends GamePart {
       astronaut.walk(WalkingDirection.down);
     } else {
       astronaut.velocity = Vector2.zero();
+      astronaut.animation = astronaut.stationaryAnimation;
     }
 
     return KeyEventResult.handled;
