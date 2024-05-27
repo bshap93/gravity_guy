@@ -3,11 +3,13 @@ import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:gravity_guy/components/outer_space_game_part/environment_components/space_station_exterior.dart';
 
 import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/planet.dart';
+import '../components/outer_space_game_part/ui_components/dialogue_box.dart';
 
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 250.00;
@@ -17,6 +19,10 @@ class OuterSpaceGamePart extends GamePart {
   bool isGuyOutsideShip = true;
   bool onLoaded = false;
 
+  final pauseOverlayIdentifier = 'PauseMenu';
+
+  late DialogueBoxComponent dialogueBoxComponent;
+
   @override
   Future<void> onLoad() async {
     await Flame.images.load('astronaut4.png');
@@ -24,6 +30,7 @@ class OuterSpaceGamePart extends GamePart {
     await Flame.images.load('spaceShip1.png');
     await Flame.images.load('spr_stars02.png');
     await Flame.images.load('spr_stars01.png');
+    await Flame.images.load('space_station_exterior.png');
 
     final parallaxBackground1 = await loadParallaxComponent(
       [
@@ -54,6 +61,13 @@ class OuterSpaceGamePart extends GamePart {
     final spaceShip = SpaceShip();
     world.add(spaceShip);
 
+    final spaceStationExterior = SpaceStationExterior();
+    world.add(spaceStationExterior);
+
+    dialogueBoxComponent = DialogueBoxComponent();
+
+    world.add(dialogueBoxComponent);
+
     camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
     camera.viewfinder.position = Vector2(500, 500);
     camera.viewfinder.anchor = Anchor.center;
@@ -83,6 +97,16 @@ class OuterSpaceGamePart extends GamePart {
     }
   }
 
+  void pauseGame(String overlayIdentifier) {
+    overlays.add(pauseOverlayIdentifier);
+    paused = true;
+  }
+
+  void unPauseGame(String overlayIdentifier) {
+    overlays.remove(pauseOverlayIdentifier);
+    paused = false;
+  }
+
   @override
   KeyEventResult onKeyEvent(
     KeyEvent event,
@@ -97,6 +121,15 @@ class OuterSpaceGamePart extends GamePart {
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
     final isKeyX = keysPressed.contains(LogicalKeyboardKey.keyX);
+    final isKeyEsc = keysPressed.contains(LogicalKeyboardKey.escape);
+
+    if (isKeyEsc && isKeyDown) {
+      if (paused)
+        unPauseGame(pauseOverlayIdentifier);
+      else
+        pauseGame(pauseOverlayIdentifier);
+      return KeyEventResult.handled;
+    }
 
     if (isKeyX && isKeyDown && canGuyEnterShip) {
       final astronaut = world.children.firstWhere(

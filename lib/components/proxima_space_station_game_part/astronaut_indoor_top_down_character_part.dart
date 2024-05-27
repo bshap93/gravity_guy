@@ -149,6 +149,20 @@ class AstronautIndoorTopDownCharacterPart extends Astronaut {
         break;
     }
   }
+
+  changeDirection(SpriteOrientedDirection direction) {
+    if (direction == SpriteOrientedDirection.left &&
+        orientedDirection == SpriteOrientedDirection.right) {
+      orientedDirection = SpriteOrientedDirection.left;
+      // flipHorizontally();
+    }
+
+    if (direction == SpriteOrientedDirection.right &&
+        orientedDirection == SpriteOrientedDirection.left) {
+      orientedDirection = SpriteOrientedDirection.right;
+      // flipHorizontally();
+    }
+  }
 }
 
 enum WalkingDirection {

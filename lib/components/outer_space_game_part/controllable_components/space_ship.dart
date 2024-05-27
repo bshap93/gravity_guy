@@ -82,6 +82,10 @@ class SpaceShip extends SpriteAnimationComponent
 
     velocity -= gravityDirection.normalized() * 100;
     game.camera.viewfinder.position = position;
+
+    Future.delayed(const Duration(seconds: 2), () {
+      velocity = Vector2.zero();
+    });
   }
 
   @override

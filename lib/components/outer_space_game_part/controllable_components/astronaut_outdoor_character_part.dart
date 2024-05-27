@@ -24,7 +24,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   Vector2 initialPosition = Vector2(500, 225);
   double boundingSpeed = 157;
   double walkingSpeed = 100;
-  double jumpSpeed = 60;
+  double jumpSpeed = 10;
 
   late SpriteSheet spriteSheet;
   late SpriteAnimation stationaryAnimation;

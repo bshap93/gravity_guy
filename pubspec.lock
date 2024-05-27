@@ -89,14 +89,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
-  flame_jenny:
-    dependency: "direct main"
-    description:
-      name: flame_jenny
-      sha256: "2c1ad452c6cdaa85d725d85078f51dfb27e6527e9ff3fc996a8d8bbb0ebd1f74"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   flame_tiled:
     dependency: "direct main"
     description:
@@ -147,14 +139,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  jenny:
-    dependency: "direct main"
-    description:
-      name: jenny
-      sha256: "164fd0cec1a17d076cd8a1c31886ec1b4132f8136e631a6ae30c701570983431"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -396,10 +380,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "0eaf06e3446824099858367950a813472af675116bf63f008a4c2a75ae13e9cb"
+      sha256: a79dbe579cb51ecd6d30b17e0cae4e0ea15e2c0e66f69ad4198f22a6789e94f4
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.0"
+    version: "5.5.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -417,5 +401,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: ">=3.3.4 <4.0.0"
+  dart: ">=3.4.0 <4.0.0"
   flutter: ">=3.19.2"
