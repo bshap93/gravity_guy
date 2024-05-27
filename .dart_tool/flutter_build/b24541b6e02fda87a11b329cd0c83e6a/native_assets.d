@@ -1,0 +1,1 @@
+ C:\\Users\\bshap\\StudioProjects\\gravity_guy\\.dart_tool\\flutter_build\\b24541b6e02fda87a11b329cd0c83e6a\\native_assets.yaml: 
