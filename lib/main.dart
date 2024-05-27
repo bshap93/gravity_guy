@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'game_parts/outer_space_game_part.dart';
 
@@ -17,6 +16,7 @@ class _GameOverviewState extends State<GameOverview> {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   final game = OuterSpaceGamePart();
   // final game = ProximaSpaceStationGamePart();
   runApp(GameWidget(
@@ -33,9 +33,9 @@ void main() {
                 right: 0,
                 child: Text(
                   "LY 2233, 09/26",
-                  style: GoogleFonts.getFont('Nabla').copyWith(
-                    color: const Color(0xFFD9BB26),
+                  style: game.mainTextFontStyle.copyWith(
                     fontSize: 12,
+                    color: const Color(0xFFD9BB26),
                   ),
                 ),
               )
@@ -51,11 +51,13 @@ void main() {
               onTap: () {
                 game.unPauseGame('PauseMenu');
               },
-              child: Text('Resume',
-                  style: GoogleFonts.getFont('Nabla').copyWith(
-                    color: const Color(0xFFD9BB26),
-                    fontSize: 32,
-                  )),
+              child: Text(
+                'Resume',
+                style: game.mainTextFontStyle.copyWith(
+                  fontSize: 32,
+                  color: const Color(0xFFD9BB26),
+                ),
+              ),
             ),
           ),
         );

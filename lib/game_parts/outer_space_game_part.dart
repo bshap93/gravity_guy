@@ -3,6 +3,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gravity_guy/components/outer_space_game_part/environment_components/space_station_exterior.dart';
 
 import '../components/inherited_components/game_part.dart';
@@ -25,6 +26,11 @@ class OuterSpaceGamePart extends GamePart {
   late DialogueBoxComponent dialogueBoxComponent;
 
   late Hud hud;
+
+  TextStyle mainTextFontStyle // When using, specify fontsize with copyWith
+      = GoogleFonts.getFont('Nabla').copyWith(
+    color: const Color(0xFFD9BB26),
+  );
 
   @override
   Future<void> onLoad() async {
@@ -75,7 +81,6 @@ class OuterSpaceGamePart extends GamePart {
     camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
     camera.viewfinder.position = Vector2(500, 500);
     camera.viewfinder.anchor = Anchor.center;
-
 
     onLoaded = true;
   }
