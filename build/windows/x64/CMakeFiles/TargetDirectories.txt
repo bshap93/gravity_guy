@@ -8,3 +8,6 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/flutter/CMakeFiles/I
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/CMakeFiles/gravity_guy.dir
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/CMakeFiles/INSTALL.dir
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/CMakeFiles/ALL_BUILD.dir
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/plugins/audioplayers_windows/CMakeFiles/audioplayers_windows_plugin.dir
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/plugins/audioplayers_windows/CMakeFiles/INSTALL.dir
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/plugins/audioplayers_windows/CMakeFiles/ALL_BUILD.dir

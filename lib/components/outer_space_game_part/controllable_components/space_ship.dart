@@ -81,17 +81,15 @@ class SpaceShip extends SpriteAnimationComponent
     ) as Planet;
     final gravityDirection = planet.position - position;
 
-    velocity -= gravityDirection.normalized() * 100;
+    velocity -= gravityDirection.normalized() * 50;
     game.camera.viewfinder.position = position;
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       velocity = Vector2.zero();
       isFlying = false;
       planet.startSpinning();
       final Hud hud = gameRef.hud;
-      hud.updateMessage(
-        "You're in space! Press C to contact the Swarm Liason"
-      );
+      hud.updateMessage("You're in space! Press C to contact the Swarm Liason");
     });
   }
 

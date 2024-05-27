@@ -1,4 +1,5 @@
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import 'game_parts/outer_space_game_part.dart';
@@ -17,8 +18,10 @@ class _GameOverviewState extends State<GameOverview> {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  FlameAudio.bgm.initialize();
   final game = OuterSpaceGamePart();
   // final game = ProximaSpaceStationGamePart();
+  FlameAudio.bgm.play('bg_music_1.mp3');
   runApp(GameWidget(
     game: game,
     initialActiveOverlays: ['DateAndTime'],

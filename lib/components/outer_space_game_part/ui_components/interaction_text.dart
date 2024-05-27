@@ -18,7 +18,7 @@ class InteractionText extends TextComponent
     super.onLoad();
     textRenderer = TextPaint(
       style: gameRef.mainTextFontStyle.copyWith(
-        fontSize: 32,
+        fontSize: 18,
       ),
       textDirection: TextDirection.ltr,
     );

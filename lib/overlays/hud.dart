@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 import '../game_parts/outer_space_game_part.dart';
 
@@ -35,7 +36,7 @@ class Hud extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
     add(dialogBoxComponent);
     currentDialogComponent = TextBoxComponent(
       text: currentDialogText,
-      boxConfig: TextBoxConfig(timePerChar: 0.05),
+      boxConfig: const TextBoxConfig(timePerChar: 0.05),
       position: Vector2(625, 50),
       size: Vector2(600, 100),
       anchor: Anchor.center,
@@ -46,12 +47,14 @@ class Hud extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
       ),
     );
     add(currentDialogComponent);
+    playBeepsForText(currentDialogText);
   }
 
-  @override
-  void update(double dt) {
-    // TODO: implement update
-    super.update(dt);
+  Future<void> playBeepsForText(String text) async {
+    final audioPlayer = await FlameAudio.loop('beep.mp3');
+    final textLength = text.length;
+    final Duration textTypeTime = Duration(milliseconds: textLength * 50);
+    await Future.delayed(textTypeTime, () => audioPlayer.stop());
   }
 
   void updateMessage(String s) {

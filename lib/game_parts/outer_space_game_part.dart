@@ -78,8 +78,9 @@ class OuterSpaceGamePart extends GamePart {
     hud = Hud();
     camera.viewport.add(hud);
 
-    camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
-    camera.viewfinder.position = Vector2(500, 500);
+    camera.viewfinder.visibleGameSize = Vector2(500, 500);
+    camera.follow(astronaut);
+    // camera.viewfinder.position = Vector2(500, 225);
     camera.viewfinder.anchor = Anchor.center;
 
     onLoaded = true;
