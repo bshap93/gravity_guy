@@ -11,7 +11,7 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/fl
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4_talking_head.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/dialog_box.png
-C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/Dome1.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/home_dome.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/other_astronaut_01.aseprite
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/other_astronaut_01.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/planet1.png

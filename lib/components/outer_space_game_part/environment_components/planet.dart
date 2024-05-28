@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:gravity_guy/components/outer_space_game_part/environment_components/home_dome.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
 
@@ -26,8 +27,10 @@ class Planet extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    add(HomeDome());
     add(SpriteComponent(
         sprite: Sprite(await Flame.images.load('rock_type_planet.png')),
+        priority: 3,
         anchor: Anchor.center,
         size: Vector2(
             radius * spriteScalingFactor, radius * spriteScalingFactor)));

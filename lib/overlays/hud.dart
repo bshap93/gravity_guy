@@ -60,6 +60,7 @@ class Hud extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
   void updateMessage(String s) {
     remove(currentDialogComponent);
     currentDialogComponent = TextBoxComponent(
+        boxConfig: const TextBoxConfig(timePerChar: 0.05),
         text: s,
         position: Vector2(625, 50),
         size: Vector2(600, 100),
@@ -71,5 +72,6 @@ class Hud extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
           ),
         ));
     add(currentDialogComponent);
+    playBeepsForText(s);
   }
 }

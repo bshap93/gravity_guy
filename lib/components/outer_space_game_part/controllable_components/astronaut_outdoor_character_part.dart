@@ -153,7 +153,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     ignorePlanetCollision = true;
     executePreJumpSequence(boundingDirection);
 
-    Future.delayed(const Duration(milliseconds: 1000), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       jumpAwayFromPlanet();
 
       final duringJumpAnimation = SpriteAnimation.fromFrameData(
@@ -182,10 +182,10 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     final preJumpAnimation = SpriteAnimation.fromFrameData(
         spriteSheet.image,
         SpriteAnimationData([
-          spriteSheet.createFrameData(0, 0, stepTime: 0.3),
+          // spriteSheet.createFrameData(0, 0, stepTime: 0.3),
           spriteSheet.createFrameData(0, 3, stepTime: 0.3),
           spriteSheet.createFrameData(0, 5, stepTime: 0.3),
-          spriteSheet.createFrameData(0, 6, stepTime: 0.3),
+          // spriteSheet.createFrameData(0, 6, stepTime: 0.3),
           spriteSheet.createFrameData(0, 7, stepTime: 0.3),
           spriteSheet.createFrameData(0, 8, stepTime: 0.3),
           spriteSheet.createFrameData(0, 9, stepTime: 0.3),
