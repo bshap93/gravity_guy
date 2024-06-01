@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
@@ -14,7 +16,7 @@ import '../components/outer_space_game_part/ui_components/dialogue_box.dart';
 import '../overlays/hud.dart';
 
 class OuterSpaceGamePart extends GamePart {
-  static const double starterPlanetRadius = 250.00;
+  static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
 
   bool canGuyEnterShip = false;
@@ -35,8 +37,7 @@ class OuterSpaceGamePart extends GamePart {
   @override
   Future<void> onLoad() async {
     await Flame.images.load('astronaut4.png');
-    await Flame.images.load('planet1.png');
-    await Flame.images.load('spaceShip1.png');
+    await Flame.images.load('Lunar_03-512x512.png');
     await Flame.images.load('spr_stars02.png');
     await Flame.images.load('spr_stars01.png');
     await Flame.images.load('space_station_exterior.png');
@@ -64,10 +65,12 @@ class OuterSpaceGamePart extends GamePart {
 
     world.add(planet);
 
-    final astronaut = AstronautOutdoorCharacterPart();
+    final astronaut =
+        AstronautOutdoorCharacterPart(initialPosition: Vector2(500, 125));
     world.add(astronaut);
 
-    final spaceShip = SpaceShip();
+    final spaceShip =
+        SpaceShip(initialPosition: Vector2(1000, 1000), initialAngle: pi / 2);
     world.add(spaceShip);
 
     final spaceStationExterior = SpaceStationExterior();
@@ -78,7 +81,8 @@ class OuterSpaceGamePart extends GamePart {
     hud = Hud();
     camera.viewport.add(hud);
 
-    camera.viewfinder.visibleGameSize = Vector2(500, 500);
+    // camera.viewfinder.visibleGameSize = Vector2(500, 500);
+    camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
     camera.follow(astronaut);
     // camera.viewfinder.position = Vector2(500, 225);
     camera.viewfinder.anchor = Anchor.center;

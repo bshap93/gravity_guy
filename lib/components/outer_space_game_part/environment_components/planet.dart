@@ -27,15 +27,19 @@ class Planet extends PositionComponent
 
   @override
   Future<void> onLoad() async {
-    add(HomeDome());
+    add(
+      HomeDome(
+        initialPosition: Vector2(0, 0),
+      ), // HomeDome is a component
+    );
     add(SpriteComponent(
-        sprite: Sprite(await Flame.images.load('rock_type_planet.png')),
+        sprite: Sprite(await Flame.images.load('Lunar_03-512x512.png')),
         priority: 3,
         anchor: Anchor.center,
         size: Vector2(
             radius * spriteScalingFactor, radius * spriteScalingFactor)));
     add(CircleHitbox(
-      radius: radius,
+      radius: radius - 10,
       anchor: Anchor.center,
       position: Vector2(offset.dx, offset.dy),
     ));

@@ -8,17 +8,20 @@ class InteractionText extends TextComponent
   InteractionText({
     required Vector2 positionVector,
     required String text,
+    required double angle,
   }) : super(
-          text: text,
-          anchor: Anchor.topRight,
-        );
+            position: positionVector,
+            text: text,
+            anchor: Anchor.center,
+            size: Vector2(50, 50),
+            angle: angle);
 
   @override
   void onLoad() {
     super.onLoad();
     textRenderer = TextPaint(
       style: gameRef.mainTextFontStyle.copyWith(
-        fontSize: 18,
+        fontSize: 32,
       ),
       textDirection: TextDirection.ltr,
     );

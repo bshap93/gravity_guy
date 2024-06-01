@@ -6,6 +6,7 @@ import 'package:flame/sprite.dart';
 import 'package:gravity_guy/components/outer_space_game_part/environment_components/planet.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
+import '../ui_components/interaction_text.dart';
 
 enum SpriteOrientedDirection { left, right }
 
@@ -16,12 +17,12 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   bool isWalking = false;
   bool astronautIsTouchingPlanet = false;
   bool ignorePlanetCollision = false;
+  bool hasStartedMoving = false;
 
   Vector2 accelerationDueToGravity = Vector2(0, 100);
   SpriteOrientedDirection orientedDirection = SpriteOrientedDirection.right;
   Vector2 velocity = Vector2.zero();
   // mass
-  Vector2 initialPosition = Vector2(500, 225);
   double boundingSpeed = 157;
   double walkingSpeed = 100;
   double jumpSpeed = 10;
@@ -29,13 +30,22 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   late SpriteSheet spriteSheet;
   late SpriteAnimation stationaryAnimation;
 
+  final Vector2 initialPosition;
+
+  InteractionText goRightText = InteractionText(
+      positionVector: Vector2(200, -100), text: '>>>> Go Right', angle: 0);
+
+  InteractionText goLeftText = InteractionText(
+      positionVector: Vector2(-200, -100), text: 'Go Left <<<<', angle: 0);
+
   // size of astronaut is 50x50
 
-  AstronautOutdoorCharacterPart()
+  AstronautOutdoorCharacterPart({required this.initialPosition})
       : super(
           size: Vector2(50, 50),
           anchor: Anchor.center,
           angle: 0,
+          position: initialPosition,
         );
 
   @override
@@ -69,18 +79,14 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
       position: Vector2(0, 0),
       anchor: Anchor.center,
     ));
+
+    add(goRightText);
+    add(goLeftText);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    // if (isWalking) {
-    //   playing = false;
-    //   // TODO - add walking animation
-    //   // animation = walkingAnimation;
-    // } else {
-    //   playing = false;
-    // }
 
     position += velocity * dt;
 
@@ -149,8 +155,17 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     }
   }
 
+  void startMoving() {
+    hasStartedMoving = true;
+    remove(goRightText);
+    remove(goLeftText);
+  }
+
   void boundInDirection(BoundingDirection boundingDirection) {
     ignorePlanetCollision = true;
+    if (!hasStartedMoving) {
+      startMoving();
+    }
     executePreJumpSequence(boundingDirection);
 
     Future.delayed(const Duration(milliseconds: 500), () {

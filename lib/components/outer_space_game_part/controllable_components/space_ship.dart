@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/particles.dart';
+import 'package:flutter/material.dart';
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/interaction_text.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
@@ -11,8 +13,8 @@ import 'astronaut_outdoor_character_part.dart';
 
 class SpaceShip extends SpriteAnimationComponent
     with HasGameRef<OuterSpaceGamePart>, CollisionCallbacks {
-  Vector2 initialPosition = Vector2(500, 775);
-  Vector2 textureSize = Vector2(32, 32);
+  Vector2 initialPosition = Vector2(500, 825);
+  Vector2 textureSize = Vector2(112, 48);
   double lengthAcross = 75;
   bool isTouchedByAstronaut = false;
 
@@ -21,29 +23,32 @@ class SpaceShip extends SpriteAnimationComponent
 
   bool isFlying = false;
   bool isOccupied = false;
+  bool inOrbit = false;
+  bool isTakingOff = false;
 
   InteractionText enterSpaceShipText = InteractionText(
-      positionVector: Vector2(500, 900), text: 'Press X to enter');
+      positionVector: Vector2(0, 0), text: 'Press X to enter', angle: 0);
 
-  SpaceShip()
+  SpaceShip({required Vector2 initialPosition, required double initialAngle})
       : super(
             // size: ,
             anchor: Anchor.center,
-            angle: pi);
+            angle: pi + pi / 16);
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    priority = 10;
 
     animation = await game.loadSpriteAnimation(
-        'spaceShip1.png',
+        'spaceship_02.png',
         SpriteAnimationData.sequenced(
-          amount: 4,
+          amount: 1,
           stepTime: 0.1,
           textureSize: textureSize,
         ));
     // For now the spaceship is represented as a square
-    size = Vector2(lengthAcross, lengthAcross);
+    size = Vector2(3 * lengthAcross, lengthAcross);
 
     position = initialPosition;
     playing = false;
@@ -73,6 +78,50 @@ class SpaceShip extends SpriteAnimationComponent
     position += velocity * dt;
 
     velocity += acceleration * dt;
+
+    if (isTakingOff) {
+      sprayParticlesOnTakeOff(Vector2.zero());
+    }
+  }
+
+  void sprayParticlesOnTakeOff(Vector2 gravityDirection) {
+    final rnd = Random();
+
+    add(
+      ParticleSystemComponent(
+        particle: AcceleratedParticle(
+          // Will fire off in the center of game canvas
+          position: Vector2(150, 50),
+
+          // With random initial speed of Vector2(-100..100, 0..-100)
+          speed:
+              -Vector2(rnd.nextDouble() * 200 - 100, -rnd.nextDouble() * 100),
+          // Accelerating downwards, simulating "gravity"
+          // speed: Vector2(0, 100),
+          child: CircleParticle(
+            radius: 2.0,
+            paint: Paint()..color = Colors.white,
+          ),
+        ),
+      ),
+    );
+    add(
+      ParticleSystemComponent(
+        particle: AcceleratedParticle(
+          // Will fire off in the center of game canvas
+          position: Vector2(75, 50),
+          // With random initial speed of Vector2(-100..100, 0..-100)
+          speed:
+              -Vector2(rnd.nextDouble() * 200 - 100, -rnd.nextDouble() * 100),
+          // Accelerating downwards, simulating "gravity"
+          // speed: Vector2(0, 100),
+          child: CircleParticle(
+            radius: 2.0,
+            paint: Paint()..color = Colors.white,
+          ),
+        ),
+      ),
+    );
   }
 
   void blastOff() {
@@ -80,6 +129,7 @@ class SpaceShip extends SpriteAnimationComponent
       (element) => element is Planet,
     ) as Planet;
     final gravityDirection = planet.position - position;
+    isTakingOff = true;
 
     velocity -= gravityDirection.normalized() * 50;
     game.camera.viewfinder.position = position;
@@ -87,10 +137,20 @@ class SpaceShip extends SpriteAnimationComponent
     Future.delayed(const Duration(seconds: 3), () {
       velocity = Vector2.zero();
       isFlying = false;
+      inOrbit = true;
+      isTakingOff = false;
       planet.startSpinning();
+      bobInPlace();
       final Hud hud = gameRef.hud;
       hud.updateMessage("You're in space! Press C to contact the Swarm Liason");
     });
+  }
+
+  void bobInPlace() {
+    final planet = gameRef.world.children.firstWhere(
+      (element) => element is Planet,
+    ) as Planet;
+    final gravityDirection = planet.position - position;
   }
 
   @override
