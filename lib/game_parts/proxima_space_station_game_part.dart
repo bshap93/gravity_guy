@@ -1,5 +1,7 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gravity_guy/components/inherited_components/game_part.dart';
@@ -8,7 +10,7 @@ import 'package:gravity_guy/components/proxima_space_station_game_part/bottom_ma
 import '../components/proxima_space_station_game_part/astronaut_indoor_top_down_character_part.dart';
 import '../components/proxima_space_station_game_part/mid_room_beam_map_object.dart';
 
-class ProximaSpaceStationGamePart extends GamePart {
+class ProximaSpaceStationGamePart extends GamePart with TapDetector {
   double mapWidth = 0;
   double mapHeight = 0;
   double tileWidth = 32;
@@ -90,5 +92,14 @@ class ProximaSpaceStationGamePart extends GamePart {
   @override
   void update(double dt) {
     super.update(dt);
+  }
+
+  @override
+  void onTap() {
+    // TODO: implement onTap
+    super.onTap();
+    if (kDebugMode) {
+      print('Tapped');
+    }
   }
 }

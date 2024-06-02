@@ -15,7 +15,7 @@ class HUDComponent extends PositionComponent
     super.angle,
     super.anchor,
     super.children,
-    super.priority = 5,
+    super.priority = 15,
   });
 
   late SpriteComponent dialogBoxComponent;
@@ -80,6 +80,9 @@ class HUDComponent extends PositionComponent
   @override
   void onTapDown(TapDownEvent event) {
     print('Tapped');
+
+    FlameAudio.bgm.play('bg_music_1.mp3');
+
     super.onTapDown(event);
   }
 }

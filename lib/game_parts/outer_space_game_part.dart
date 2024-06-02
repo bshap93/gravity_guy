@@ -5,13 +5,13 @@ import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gravity_guy/components/outer_space_game_part/environment_components/space_station_exterior.dart';
 
 import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/planet.dart';
+import '../components/outer_space_game_part/ui_components/dialogue_box_large.dart';
 import '../hud.dart';
 
 class OuterSpaceGamePart extends GamePart {
@@ -23,6 +23,8 @@ class OuterSpaceGamePart extends GamePart {
   bool onLoaded = false;
   bool guyCanInitiateDialogue = false;
 
+  late DialogueBoxLarge dialogueBoxComponent;
+
   final pauseOverlayIdentifier = 'PauseMenu';
   final dialogueOverlayIdentifier = 'DialogueScreen';
 
@@ -30,11 +32,12 @@ class OuterSpaceGamePart extends GamePart {
   late AstronautOutdoorCharacterPart astronaut;
   late SpaceShip spaceShip;
 
-  TextStyle mainTextFontStyle // When using, specify fontsize with copyWith
-      = GoogleFonts.getFont('Nabla').copyWith(
-    color: const Color(0xFFD9BB26),
+  TextStyle mainTextFontStyle = const TextStyle(
+    color: Color(0xFFD9BB26),
+    fontSize: 12,
+    fontFamily: 'Roboto',
   );
-
+  //
   @override
   Future<void> onLoad() async {
     await Flame.images.load('astronaut4.png');
@@ -43,6 +46,8 @@ class OuterSpaceGamePart extends GamePart {
     await Flame.images.load('spr_stars01.png');
     await Flame.images.load('space_station_exterior.png');
     await Flame.images.load('ui_elements/button_x.png');
+
+    dialogueBoxComponent = DialogueBoxLarge();
 
     final parallaxBackground1 = await loadParallaxComponent(
       [
@@ -122,14 +127,10 @@ class OuterSpaceGamePart extends GamePart {
     paused = false;
   }
 
-  void enterDialogue(String overlayIdentifier) {
-    overlays.add(dialogueOverlayIdentifier);
-    paused = false;
-  }
+  void enterDialogue(String overlayIdentifier) {}
 
-  void exitDialogue(String overlayIdentifier) {
-    overlays.remove(dialogueOverlayIdentifier);
-    paused = false;
+  void exitDialogue() {
+    camera.viewport.remove(dialogueBoxComponent);
   }
 
   @override
@@ -159,7 +160,7 @@ class OuterSpaceGamePart extends GamePart {
     }
 
     if (isKeyC && isKeyDown) {
-      // enterDialogue(dialogueOverlayIdentifier);
+      camera.viewport.add(dialogueBoxComponent);
       return KeyEventResult.handled;
     }
 

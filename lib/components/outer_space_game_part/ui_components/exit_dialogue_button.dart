@@ -10,12 +10,13 @@ class ExitDialogueButton extends SpriteAnimationComponent
   ExitDialogueButton()
       : super(
           anchor: Anchor.center,
+          position: Vector2(200, -220),
         );
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    position = Vector2(940, 185);
+    // position = Vector2(0, 0);
     priority = 12;
     anchor = Anchor.center;
     final spriteSheet = SpriteSheet(
@@ -32,5 +33,12 @@ class ExitDialogueButton extends SpriteAnimationComponent
     animation = idleExitDialogueButtonAnimation;
 
     size = Vector2(24, 24);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    // TODO: implement onTapDown
+    super.onTapDown(event);
+    gameRef.exitDialogue();
   }
 }
