@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'game_parts/outer_space_game_part.dart';
+import 'overlays/dialogue_screen_widget.dart';
 
 class GameOverview extends StatefulWidget {
   @override
@@ -42,6 +43,14 @@ void main() {
                 ),
               )
             ],
+          ),
+        );
+      },
+      'DialogueScreen': (BuildContext context, OuterSpaceGamePart game) {
+        return Container(
+          color: Colors.black.withOpacity(0.0),
+          child: DialogueScreenWidget(
+            game: game,
           ),
         );
       },

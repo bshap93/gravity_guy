@@ -12,8 +12,7 @@ import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/planet.dart';
-import '../components/outer_space_game_part/ui_components/dialogue_box.dart';
-import '../overlays/hud.dart';
+import '../hud.dart';
 
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
@@ -22,12 +21,14 @@ class OuterSpaceGamePart extends GamePart {
   bool canGuyEnterShip = false;
   bool isGuyOutsideShip = true;
   bool onLoaded = false;
+  bool guyCanInitiateDialogue = false;
 
   final pauseOverlayIdentifier = 'PauseMenu';
+  final dialogueOverlayIdentifier = 'DialogueScreen';
 
-  late DialogueBoxComponent dialogueBoxComponent;
-
-  late Hud hud;
+  late HUDComponent hudComponent;
+  late AstronautOutdoorCharacterPart astronaut;
+  late SpaceShip spaceShip;
 
   TextStyle mainTextFontStyle // When using, specify fontsize with copyWith
       = GoogleFonts.getFont('Nabla').copyWith(
@@ -41,6 +42,7 @@ class OuterSpaceGamePart extends GamePart {
     await Flame.images.load('spr_stars02.png');
     await Flame.images.load('spr_stars01.png');
     await Flame.images.load('space_station_exterior.png');
+    await Flame.images.load('ui_elements/button_x.png');
 
     final parallaxBackground1 = await loadParallaxComponent(
       [
@@ -65,21 +67,19 @@ class OuterSpaceGamePart extends GamePart {
 
     world.add(planet);
 
-    final astronaut =
+    astronaut =
         AstronautOutdoorCharacterPart(initialPosition: Vector2(500, 125));
     world.add(astronaut);
 
-    final spaceShip =
+    spaceShip =
         SpaceShip(initialPosition: Vector2(1000, 1000), initialAngle: pi / 2);
     world.add(spaceShip);
 
     final spaceStationExterior = SpaceStationExterior();
     world.add(spaceStationExterior);
 
-    dialogueBoxComponent = DialogueBoxComponent();
-
-    hud = Hud();
-    camera.viewport.add(hud);
+    hudComponent = HUDComponent();
+    camera.viewport.add(hudComponent);
 
     // camera.viewfinder.visibleGameSize = Vector2(500, 500);
     camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
@@ -95,9 +95,9 @@ class OuterSpaceGamePart extends GamePart {
     super.update(dt);
 
     if (!isGuyOutsideShip) {
-      final spaceShip = world.children.firstWhere(
-        (element) => element is SpaceShip,
-      ) as SpaceShip;
+      // final spaceShip = world.children.firstWhere(
+      //   (element) => element is SpaceShip,
+      // ) as SpaceShip;
 
       if (spaceShip.isOccupied) {
         camera.viewfinder.position = spaceShip.position;
@@ -122,6 +122,16 @@ class OuterSpaceGamePart extends GamePart {
     paused = false;
   }
 
+  void enterDialogue(String overlayIdentifier) {
+    overlays.add(dialogueOverlayIdentifier);
+    paused = false;
+  }
+
+  void exitDialogue(String overlayIdentifier) {
+    overlays.remove(dialogueOverlayIdentifier);
+    paused = false;
+  }
+
   @override
   KeyEventResult onKeyEvent(
     KeyEvent event,
@@ -137,24 +147,24 @@ class OuterSpaceGamePart extends GamePart {
     final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
     final isKeyX = keysPressed.contains(LogicalKeyboardKey.keyX);
     final isKeyEsc = keysPressed.contains(LogicalKeyboardKey.escape);
+    final isKeyC = keysPressed.contains(LogicalKeyboardKey.keyC);
 
     if (isKeyEsc && isKeyDown) {
-      if (paused)
+      if (paused) {
         unPauseGame(pauseOverlayIdentifier);
-      else
+      } else {
         pauseGame(pauseOverlayIdentifier);
+      }
+      return KeyEventResult.handled;
+    }
+
+    if (isKeyC && isKeyDown) {
+      // enterDialogue(dialogueOverlayIdentifier);
       return KeyEventResult.handled;
     }
 
     if (isKeyX && isKeyDown && canGuyEnterShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
       world.remove(astronaut);
-
-      final spaceShip = world.children.firstWhere(
-        (element) => element is SpaceShip,
-      ) as SpaceShip;
 
       spaceShip.acceptAstronaut();
       camera.viewfinder.position = spaceShip.position;
@@ -183,17 +193,11 @@ class OuterSpaceGamePart extends GamePart {
 
     /// Player presses down the space key
     if (wasKeySpace && isKeyDown && isGuyOutsideShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
       astronaut.jumpAwayFromPlanet();
       return KeyEventResult.handled;
     }
 
     if (wasArrowRight && isKeyUp && isGuyOutsideShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
       astronaut.isWalking = false;
 
       return KeyEventResult.handled;
@@ -207,9 +211,6 @@ class OuterSpaceGamePart extends GamePart {
     }
 
     if (isKeyUp && wasArrowLeft && isGuyOutsideShip) {
-      final astronaut = world.children.firstWhere(
-        (element) => element is AstronautOutdoorCharacterPart,
-      ) as AstronautOutdoorCharacterPart;
       astronaut.isWalking = false;
       return KeyEventResult.handled;
     }
@@ -217,26 +218,8 @@ class OuterSpaceGamePart extends GamePart {
     return KeyEventResult.ignored;
   }
 
-  // void walkRightOverview() {
-  //   // astronaut is walking
-  //   final astronaut = world.children.firstWhere(
-  //     (element) => element is AstronautOutdoorCharacterPart,
-  //   ) as AstronautOutdoorCharacterPart;
-  //   if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
-  //     astronaut.changeDirection(SpriteOrientedDirection.right);
-  //   }
-  //   astronaut.isWalking = true;
-  //
-  //   if (astronaut.astronautIsTouchingPlanet) {
-  //     astronaut.walkInDirection(BoundingDirection.right);
-  //   }
-  // }
-
   void boundRightOverview() {
     // astronaut is walking
-    final astronaut = world.children.firstWhere(
-      (element) => element is AstronautOutdoorCharacterPart,
-    ) as AstronautOutdoorCharacterPart;
 
     if (astronaut.orientedDirection == SpriteOrientedDirection.left) {
       astronaut.changeDirection(SpriteOrientedDirection.right);
@@ -250,9 +233,7 @@ class OuterSpaceGamePart extends GamePart {
 
   void boundLeftOverview() {
     // astronaut is walking
-    final astronaut = world.children.firstWhere(
-      (element) => element is AstronautOutdoorCharacterPart,
-    ) as AstronautOutdoorCharacterPart;
+
     if (astronaut.orientedDirection == SpriteOrientedDirection.right) {
       astronaut.changeDirection(SpriteOrientedDirection.left);
     }

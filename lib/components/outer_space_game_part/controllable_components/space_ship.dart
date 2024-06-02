@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/interaction_text.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
-import '../../../overlays/hud.dart';
+import '../../../hud.dart';
 import '../environment_components/planet.dart';
 import 'astronaut_outdoor_character_part.dart';
 
@@ -141,7 +141,7 @@ class SpaceShip extends SpriteAnimationComponent
       isTakingOff = false;
       planet.startSpinning();
       bobInPlace();
-      final Hud hud = gameRef.hud;
+      final HUDComponent hud = gameRef.hudComponent;
       hud.updateMessage("You're in space! Press C to contact the Swarm Liason");
     });
   }

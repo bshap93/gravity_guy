@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:gravity_guy/components/outer_space_game_part/environment_components/planet.dart';
+import 'package:gravity_guy/helpers/helpers.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
 import '../ui_components/interaction_text.dart';
@@ -249,16 +248,5 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     if (other is Planet) {
       astronautIsTouchingPlanet = false;
     }
-  }
-}
-
-double Vector2ToRadian(Vector2 direction) {
-  double angle = 2 * pi - atan2(direction.x, direction.y);
-  return angle;
-}
-
-extension Vector2Extension on Vector2 {
-  Vector2 perpendicular() {
-    return Vector2(-y, x);
   }
 }
