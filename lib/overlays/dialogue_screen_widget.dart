@@ -27,9 +27,7 @@ class DialogueScreenWidget extends StatelessWidget {
           right: MediaQuery.of(context).size.width / 2 - 310,
           top: MediaQuery.of(context).size.height / 2 - 215,
           child: GestureDetector(
-              onTap: () {
-                game.exitDialogue('DialogueScreen');
-              },
+              onTap: () {},
               child: Image.asset('assets/images/ui_elements/button_x1.png')),
         ),
       ]),

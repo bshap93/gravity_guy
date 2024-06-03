@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:gravity_guy/game_parts/outer_space_game_part.dart';
 
+import 'character_avatar.dart';
 import 'exit_dialogue_button.dart';
 
 class DialogueBoxLarge extends PositionComponent
@@ -8,6 +9,8 @@ class DialogueBoxLarge extends PositionComponent
   late ExitDialogueButton exitDialogueButton;
   late SpriteComponent boxForDialogue;
   late Sprite boxSprite;
+  late CharacterAvatar characterAvatar;
+  late CharacterAvatar npcAvatar;
 
   DialogueBoxLarge()
       : super(
@@ -33,8 +36,13 @@ class DialogueBoxLarge extends PositionComponent
       sprite: boxSprite,
     );
 
+    characterAvatar = CharacterAvatar(isPlayerAvatar: true);
+    npcAvatar = CharacterAvatar(isPlayerAvatar: false);
+
     add(boxForDialogue);
 
     add(exitDialogueButton);
+
+    add(characterAvatar);
   }
 }

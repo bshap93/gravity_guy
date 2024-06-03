@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/ui_elements/
+    - assets/images/character_dialog_avatars/
     - assets/tiles/
     - assets/dialogue/
     - assets/audio/
