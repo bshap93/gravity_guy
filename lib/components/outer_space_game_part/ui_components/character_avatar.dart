@@ -25,11 +25,11 @@ class CharacterAvatar extends SpriteAnimationComponent
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    if (isPlayerAvatar) {
-      await loadPlayerAvatar();
-    } else {
-      await loadNpcAvatar();
-    }
+    // if (isPlayerAvatar) {
+    //   await loadPlayerAvatar();
+    // } else {
+    //   await loadNpcAvatar();
+    // }
     position = Vector2(0, -180);
     size = Vector2(32, 19) * 3;
     playerSpriteSheet = SpriteSheet(

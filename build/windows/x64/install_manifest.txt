@@ -9,6 +9,8 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/fl
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/dialogue/adventure.yarn
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4_talking_head.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/character_dialog_avatars/astronaut4_talking_head.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/character_dialog_avatars/other_astronaut_01.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/dialog_box.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/dialog_box_large-export.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/dialog_box_large.png

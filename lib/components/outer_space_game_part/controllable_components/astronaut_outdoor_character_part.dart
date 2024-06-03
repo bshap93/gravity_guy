@@ -34,8 +34,8 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   InteractionText goRightText = InteractionText(
       positionVector: Vector2(200, -100), text: '>>>> Go Right', angle: 0);
 
-  InteractionText goLeftText = InteractionText(
-      positionVector: Vector2(-200, -100), text: 'Go Left <<<<', angle: 0);
+  // InteractionText goLeftText = InteractionText(
+  //     positionVector: Vector2(-200, -100), text: 'Go Left <<<<', angle: 0);
 
   // size of astronaut is 50x50
 
@@ -80,7 +80,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     ));
 
     add(goRightText);
-    add(goLeftText);
+    // add(goLeftText);
   }
 
   @override
@@ -157,7 +157,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   void startMoving() {
     hasStartedMoving = true;
     remove(goRightText);
-    remove(goLeftText);
+    // remove(goLeftText);
   }
 
   void boundInDirection(BoundingDirection boundingDirection) {
