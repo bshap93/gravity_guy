@@ -30,6 +30,9 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/fl
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x2.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x3.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x4.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/dialog_box-teal.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/listbox_default.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/ui_palette.aseprite
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/tiles/control_room.tmx
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/tiles/control_room_bottom.tmx
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/tiles/control_room_midroom_beam.tmx

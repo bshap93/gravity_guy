@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:gravity_guy/game_parts/outer_space_game_part.dart';
 
 late SpriteAnimation idleExitDialogueButtonAnimation;
@@ -36,9 +37,9 @@ class ExitDialogueButton extends SpriteAnimationComponent
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
-    // TODO: implement onTapDown
+  Future<void> onTapDown(TapDownEvent event) async {
     super.onTapDown(event);
+    await FlameAudio.play('beep.mp3');
     gameRef.exitDialogue();
   }
 }

@@ -68,8 +68,11 @@ class DialogueBoxLarge extends PositionComponent
     ));
 
     scriptDialogInteraction = ScriptDialogInteraction(
-      text: 'Hello, I am an astronaut. I am here to help you.',
+      text:
+          'You know the drill... get all the debris half a klick sunward. Stay safe!',
     );
+
+    add(scriptDialogInteraction);
 
     add(boxForDialogue);
 
