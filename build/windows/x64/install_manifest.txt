@@ -25,11 +25,13 @@ C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/fl
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_station_exterior.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars01.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars02.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsdown.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsleft.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsright.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsup.png
+C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_small_cut1.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x1.png
-C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x2.png
-C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x3.png
-C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/button_x4.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/dialog_box-teal.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/listbox_default.png
 C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/ui_palette.aseprite

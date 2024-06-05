@@ -50,6 +50,10 @@ class Planet extends PositionComponent
     angleVelocity = 0.1;
   }
 
+  void stopSpinning() {
+    angleVelocity = 0;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);

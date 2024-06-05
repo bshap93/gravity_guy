@@ -11,7 +11,7 @@ import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/planet.dart';
-import '../components/outer_space_game_part/ui_components/dialogue_box_large.dart';
+import '../components/outer_space_game_part/ui_components/dialog_box/dialogue_box_large.dart';
 import '../hud.dart';
 
 class OuterSpaceGamePart extends GamePart {
@@ -31,6 +31,7 @@ class OuterSpaceGamePart extends GamePart {
   late HUDComponent hudComponent;
   late AstronautOutdoorCharacterPart astronaut;
   late SpaceShip spaceShip;
+  late Planet planet;
 
   TextStyle mainTextFontStyle = const TextStyle(
     color: Color(0xFFD9BB26),
@@ -61,7 +62,7 @@ class OuterSpaceGamePart extends GamePart {
       repeat: ImageRepeat.repeat,
     );
 
-    final planet = Planet(
+    planet = Planet(
       radius: starterPlanetRadius,
       mass: starterPlanetMass,
       offset: const Offset(0, 0),
@@ -143,6 +144,9 @@ class OuterSpaceGamePart extends GamePart {
 
     final isArrowRight = keysPressed.contains(LogicalKeyboardKey.arrowRight);
     final isArrowLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft);
+    final isArrowUp = keysPressed.contains(LogicalKeyboardKey.arrowUp);
+    final isArrowDown = keysPressed.contains(LogicalKeyboardKey.arrowDown);
+
     final wasArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
     final wasKeySpace = event.logicalKey == LogicalKeyboardKey.space;
@@ -190,6 +194,33 @@ class OuterSpaceGamePart extends GamePart {
     if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
       boundLeftOverview();
       return KeyEventResult.handled;
+    }
+
+    // Thrusting the space ship
+
+    if (isArrowUp && isKeyDown && spaceShip.isUnderUserControlledThrust) {
+      spaceShip.isThrustingForward = true;
+      return KeyEventResult.handled;
+    } else if (isArrowDown &&
+        isKeyDown &&
+        spaceShip.isUnderUserControlledThrust) {
+      spaceShip.isThrustingBackward = true;
+      return KeyEventResult.handled;
+    } else if (isArrowRight &&
+        isKeyDown &&
+        spaceShip.isUnderUserControlledThrust) {
+      spaceShip.isThrustingRight = true;
+      return KeyEventResult.handled;
+    } else if (isArrowLeft &&
+        isKeyDown &&
+        spaceShip.isUnderUserControlledThrust) {
+      spaceShip.isThrustingLeft = true;
+      return KeyEventResult.handled;
+    } else {
+      spaceShip.isThrustingForward = false;
+      spaceShip.isThrustingBackward = false;
+      spaceShip.isThrustingRight = false;
+      spaceShip.isThrustingLeft = false;
     }
 
     /// Player presses down the space key
@@ -243,5 +274,11 @@ class OuterSpaceGamePart extends GamePart {
     if (astronaut.astronautIsTouchingPlanet) {
       astronaut.boundInDirection(BoundingDirection.left);
     }
+  }
+
+  void beginDebrisGathering() {
+    spaceShip.inOrbit = false;
+    planet.stopSpinning();
+    spaceShip.driftOut();
   }
 }

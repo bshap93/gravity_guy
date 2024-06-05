@@ -25,6 +25,15 @@ class SpaceShip extends SpriteAnimationComponent
   bool isOccupied = false;
   bool inOrbit = false;
   bool isTakingOff = false;
+  bool isUnderUserControlledThrust = false;
+
+  bool isThrustingForward = false;
+  bool isThrustingBackward = false;
+  bool isThrustingLeft = false;
+  bool isThrustingRight = false;
+
+  double thrustAngle = 0.0;
+  double thrustPower = 25.0;
 
   InteractionText enterSpaceShipText = InteractionText(
       positionVector: Vector2(0, 0), text: 'Press X to enter', angle: 0);
@@ -80,15 +89,38 @@ class SpaceShip extends SpriteAnimationComponent
     velocity += acceleration * dt;
 
     if (isTakingOff) {
-      sprayParticlesOnTakeOff(Vector2.zero());
+      sprayParticlesBack(0);
+    }
+
+    if (isUnderUserControlledThrust) {}
+
+    if (isThrustingForward) {
+      thrustForward();
+      sprayParticlesBack(thrustAngle);
+    }
+
+    if (isThrustingBackward) {
+      thrustBackward();
+      sprayParticlesBack(thrustAngle);
+    }
+
+    if (isThrustingLeft) {
+      thrustLeft();
+      sprayParticlesBack(thrustAngle);
+    }
+
+    if (isThrustingRight) {
+      thrustRight();
+      sprayParticlesBack(thrustAngle);
     }
   }
 
-  void sprayParticlesOnTakeOff(Vector2 gravityDirection) {
+  void sprayParticlesBack(double angle) {
     final rnd = Random();
 
     add(
       ParticleSystemComponent(
+        angle: angle,
         particle: AcceleratedParticle(
           // Will fire off in the center of game canvas
           position: Vector2(150, 50),
@@ -107,6 +139,7 @@ class SpaceShip extends SpriteAnimationComponent
     );
     add(
       ParticleSystemComponent(
+        angle: angle,
         particle: AcceleratedParticle(
           // Will fire off in the center of game canvas
           position: Vector2(75, 50),
@@ -136,22 +169,13 @@ class SpaceShip extends SpriteAnimationComponent
 
     Future.delayed(const Duration(seconds: 3), () {
       velocity = Vector2.zero();
-      isFlying = false;
-      inOrbit = true;
       isTakingOff = false;
-      planet.startSpinning();
-      bobInPlace();
       final HUDComponent hud = gameRef.hudComponent;
-      hud.updateMessage("You're in space! Press C to contact the Swarm Liason");
+      hud.updateMessage("Use the arrow keys to navigate the ship.");
     });
   }
 
-  void bobInPlace() {
-    final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
-    final gravityDirection = planet.position - position;
-  }
+  void bobInPlace() {}
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
@@ -170,5 +194,49 @@ class SpaceShip extends SpriteAnimationComponent
       remove(enterSpaceShipText);
       game.canGuyEnterShip = false;
     }
+  }
+
+  void driftOut() {
+    final planet = gameRef.world.children.firstWhere(
+      (element) => element is Planet,
+    ) as Planet;
+    final gravityDirection = planet.position - position;
+    velocity -= gravityDirection.normalized() * thrustPower;
+    isTakingOff = true;
+
+    Future.delayed(const Duration(seconds: 2), () {
+      final HUDComponent hud = gameRef.hudComponent;
+      hud.updateMessage("Thrust forward to navigate the ship.");
+      isUnderUserControlledThrust = true;
+      isTakingOff = false;
+    });
+  }
+
+  void thrustForward() {
+    final thrustDirection = Vector2(0, -1).normalized();
+    velocity += thrustDirection * thrustPower;
+    thrustAngle = 0;
+    sprayParticlesBack(thrustAngle);
+  }
+
+  void thrustBackward() {
+    final thrustDirection = Vector2(0, 1).normalized();
+    velocity += thrustDirection * thrustPower;
+    thrustAngle = pi;
+    sprayParticlesBack(thrustAngle);
+  }
+
+  void thrustLeft() {
+    final thrustDirection = Vector2(-1, 0).normalized();
+    velocity += thrustDirection * thrustPower;
+    thrustAngle = -pi / 2;
+    sprayParticlesBack(thrustAngle);
+  }
+
+  void thrustRight() {
+    final thrustDirection = Vector2(1, 0).normalized();
+    velocity += thrustDirection * thrustPower;
+    thrustAngle = pi / 2;
+    sprayParticlesBack(thrustAngle);
   }
 }
