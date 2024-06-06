@@ -12,7 +12,7 @@ class SpaceStationExterior extends SpriteComponent {
   Future<void> onLoad() async {
     super.onLoad();
 
-    position = Vector2(512, 2500);
+    position = Vector2(512, 1500);
     final spaceStationSprite = await Sprite.load('space_station_exterior.png');
 
     sprite = spaceStationSprite;

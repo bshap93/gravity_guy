@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/dialog_box/script_dialog_interaction.dart';
 import 'package:gravity_guy/game_parts/outer_space_game_part.dart';
 
@@ -81,7 +80,6 @@ class DialogueBoxLarge extends PositionComponent
       anchor: Anchor.center,
       onTap: () async {
         gameRef.exitDialogue();
-        await FlameAudio.play('beep.mp3');
         gameRef.beginDebrisGathering();
       },
     ));

@@ -76,13 +76,4 @@ class HUDComponent extends PositionComponent
     add(currentDialogComponent);
     playBeepsForText(s);
   }
-
-  @override
-  void onTapDown(TapDownEvent event) {
-    print('Tapped');
-
-    FlameAudio.bgm.play('bg_music_1.mp3');
-
-    super.onTapDown(event);
-  }
 }

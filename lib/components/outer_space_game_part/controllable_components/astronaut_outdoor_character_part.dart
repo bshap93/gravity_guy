@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:gravity_guy/components/outer_space_game_part/environment_components/planet.dart';
+import 'package:gravity_guy/components/outer_space_game_part/environment_components/rocky_moon.dart';
 import 'package:gravity_guy/helpers/helpers.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
@@ -90,8 +90,8 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     position += velocity * dt;
 
     final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
+      (element) => element is RockyMoon,
+    ) as RockyMoon;
 
     final direction = planet.position - position;
 
@@ -127,8 +127,8 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   void jumpAwayFromPlanet() {
     // jump away from planet
     final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
+      (element) => element is RockyMoon,
+    ) as RockyMoon;
     final direction = position - planet.position; // direction away from planet
     velocity = direction.normalized() * jumpSpeed;
     ignorePlanetCollision = false;
@@ -221,8 +221,8 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
 
   Vector2 getVelocityChangeDirection() {
     final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
+      (element) => element is RockyMoon,
+    ) as RockyMoon;
     final gravityDirection = planet.position - position;
 
     // perpendicular direction
@@ -232,7 +232,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    if (other is Planet) {
+    if (other is RockyMoon) {
       if (!ignorePlanetCollision) {
         // velocity is ze
         velocity = Vector2.zero();
@@ -245,7 +245,7 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
   @override
   void onCollisionEnd(PositionComponent other) {
     super.onCollisionEnd(other);
-    if (other is Planet) {
+    if (other is RockyMoon) {
       astronautIsTouchingPlanet = false;
     }
   }

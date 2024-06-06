@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'game_parts/outer_space_game_part.dart';
 
 class GameOverview extends StatefulWidget {
+  const GameOverview({super.key});
+
   @override
   _GameOverviewState createState() => _GameOverviewState();
 }
@@ -18,39 +20,10 @@ class _GameOverviewState extends State<GameOverview> {
 void main() {
   // FlameAudio.bgm.initialize();
   final game = OuterSpaceGamePart();
-  // final game = ProximaSpaceStationGamePart();
-  // FlameAudio.bgm.play('bg_music_1.mp3');
+
   runApp(GameWidget(
     game: game,
     overlayBuilderMap: {
-      'DateAndTime': (BuildContext context, OuterSpaceGamePart game) {
-        return Container(
-          color: Colors.black.withOpacity(0),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Text(
-                  "LY 2233, 09/26",
-                  style: game.mainTextFontStyle.copyWith(
-                    fontSize: 12,
-                    color: const Color(0xFFD9BB26),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      },
-      'InvisibleTapOverlay': (BuildContext context, OuterSpaceGamePart game) {
-        return GestureDetector(
-          onTap: () {},
-          child: Container(
-            color: Colors.black.withOpacity(0),
-          ),
-        );
-      },
       'PauseMenu': (BuildContext context, OuterSpaceGamePart game) {
         return Container(
           color: Colors.black.withOpacity(0.5),

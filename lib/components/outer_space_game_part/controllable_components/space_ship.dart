@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/interaction_text.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
-import '../../../hud.dart';
-import '../environment_components/planet.dart';
+import '../environment_components/rocky_moon.dart';
 import 'astronaut_outdoor_character_part.dart';
 
 class SpaceShip extends SpriteAnimationComponent
@@ -27,8 +26,8 @@ class SpaceShip extends SpriteAnimationComponent
   bool isTakingOff = false;
   bool isUnderUserControlledThrust = false;
 
-  bool isThrustingForward = false;
-  bool isThrustingBackward = false;
+  bool isThrustingUp = false;
+  bool isThrustingDown = false;
   bool isThrustingLeft = false;
   bool isThrustingRight = false;
 
@@ -94,12 +93,12 @@ class SpaceShip extends SpriteAnimationComponent
 
     if (isUnderUserControlledThrust) {}
 
-    if (isThrustingForward) {
+    if (isThrustingUp) {
       thrustForward();
       sprayParticlesBack(thrustAngle);
     }
 
-    if (isThrustingBackward) {
+    if (isThrustingDown) {
       thrustBackward();
       sprayParticlesBack(thrustAngle);
     }
@@ -158,20 +157,21 @@ class SpaceShip extends SpriteAnimationComponent
   }
 
   void blastOff() {
-    final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
-    final gravityDirection = planet.position - position;
-    isTakingOff = true;
+    final rockyMoon = gameRef.world.children.firstWhere(
+      (element) => element is RockyMoon,
+    ) as RockyMoon;
+    final gravityDirection = rockyMoon.position - position;
+    isThrustingDown = true;
 
     velocity -= gravityDirection.normalized() * 50;
     game.camera.viewfinder.position = position;
 
     Future.delayed(const Duration(seconds: 3), () {
       velocity = Vector2.zero();
-      isTakingOff = false;
-      final HUDComponent hud = gameRef.hudComponent;
-      hud.updateMessage("Use the arrow keys to navigate the ship.");
+      rockyMoon.startSpinning();
+      isThrustingDown = false;
+
+      gameRef.alertUserToRadioForeman();
     });
   }
 
@@ -198,14 +198,14 @@ class SpaceShip extends SpriteAnimationComponent
 
   void driftOut() {
     final planet = gameRef.world.children.firstWhere(
-      (element) => element is Planet,
-    ) as Planet;
+      (element) => element is RockyMoon,
+    ) as RockyMoon;
     final gravityDirection = planet.position - position;
     velocity -= gravityDirection.normalized() * thrustPower;
     isTakingOff = true;
 
     Future.delayed(const Duration(seconds: 2), () {
-      final HUDComponent hud = gameRef.hudComponent;
+      final hud = gameRef.hudComponent;
       hud.updateMessage("Thrust forward to navigate the ship.");
       isUnderUserControlledThrust = true;
       isTakingOff = false;

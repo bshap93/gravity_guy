@@ -3,25 +3,26 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:gravity_guy/components/outer_space_game_part/environment_components/space_station_exterior.dart';
 
 import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship.dart';
-import '../components/outer_space_game_part/environment_components/planet.dart';
+import '../components/outer_space_game_part/environment_components/debris_component.dart';
+import '../components/outer_space_game_part/environment_components/rocky_moon.dart';
 import '../components/outer_space_game_part/ui_components/dialog_box/dialogue_box_large.dart';
 import '../hud.dart';
 
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
+  static const double zoomOutMultiplier = 0.5;
 
   bool canGuyEnterShip = false;
   bool isGuyOutsideShip = true;
-  bool onLoaded = false;
-  bool guyCanInitiateDialogue = false;
+  bool canPlayerInitiateDialogue = false;
 
   late DialogueBoxLarge dialogueBoxComponent;
 
@@ -31,7 +32,7 @@ class OuterSpaceGamePart extends GamePart {
   late HUDComponent hudComponent;
   late AstronautOutdoorCharacterPart astronaut;
   late SpaceShip spaceShip;
-  late Planet planet;
+  late RockyMoon rockyMoon;
 
   TextStyle mainTextFontStyle = const TextStyle(
     color: Color(0xFFD9BB26),
@@ -41,12 +42,16 @@ class OuterSpaceGamePart extends GamePart {
   //
   @override
   Future<void> onLoad() async {
+    debugMode = false;
     await Flame.images.load('astronaut4.png');
     await Flame.images.load('Lunar_03-512x512.png');
     await Flame.images.load('spr_stars02.png');
     await Flame.images.load('spr_stars01.png');
     await Flame.images.load('space_station_exterior.png');
     await Flame.images.load('ui_elements/button_x.png');
+    await Flame.images.load('debris/rock_1.png');
+    await Flame.images.load('debris/rock_2.png');
+    await Flame.images.load('debris/probe_1.png');
 
     dialogueBoxComponent = DialogueBoxLarge();
 
@@ -62,38 +67,38 @@ class OuterSpaceGamePart extends GamePart {
       repeat: ImageRepeat.repeat,
     );
 
-    planet = Planet(
+    rockyMoon = RockyMoon(
       radius: starterPlanetRadius,
-      mass: starterPlanetMass,
       offset: const Offset(0, 0),
       positionVector: Vector2(500, 500),
     );
 
     world.add(parallaxBackground1);
 
-    world.add(planet);
+    world.add(rockyMoon);
+
+    populateVicinityWithDebris(
+      500,
+      500,
+    );
 
     astronaut =
         AstronautOutdoorCharacterPart(initialPosition: Vector2(500, 125));
     world.add(astronaut);
 
+    // Space ship on the other side of the moon
     spaceShip =
         SpaceShip(initialPosition: Vector2(1000, 1000), initialAngle: pi / 2);
     world.add(spaceShip);
 
-    final spaceStationExterior = SpaceStationExterior();
-    world.add(spaceStationExterior);
-
     hudComponent = HUDComponent();
     camera.viewport.add(hudComponent);
 
-    // camera.viewfinder.visibleGameSize = Vector2(500, 500);
-    camera.viewfinder.visibleGameSize = Vector2(1000, 1000);
-    camera.follow(astronaut);
-    // camera.viewfinder.position = Vector2(500, 225);
+    camera.viewfinder.visibleGameSize = Vector2(1000, 1000) * zoomOutMultiplier;
+    camera.follow(
+      astronaut,
+    );
     camera.viewfinder.anchor = Anchor.center;
-
-    onLoaded = true;
   }
 
   @override
@@ -101,10 +106,6 @@ class OuterSpaceGamePart extends GamePart {
     super.update(dt);
 
     if (!isGuyOutsideShip) {
-      // final spaceShip = world.children.firstWhere(
-      //   (element) => element is SpaceShip,
-      // ) as SpaceShip;
-
       if (spaceShip.isOccupied) {
         camera.viewfinder.position = spaceShip.position;
       }
@@ -128,10 +129,9 @@ class OuterSpaceGamePart extends GamePart {
     paused = false;
   }
 
-  void enterDialogue(String overlayIdentifier) {}
-
-  void exitDialogue() {
+  Future<void> exitDialogue() async {
     camera.viewport.remove(dialogueBoxComponent);
+    await FlameAudio.play('beep.mp3');
   }
 
   @override
@@ -164,8 +164,10 @@ class OuterSpaceGamePart extends GamePart {
     }
 
     if (isKeyC && isKeyDown) {
-      camera.viewport.add(dialogueBoxComponent);
-      return KeyEventResult.handled;
+      if (canPlayerInitiateDialogue) {
+        camera.viewport.add(dialogueBoxComponent);
+        return KeyEventResult.handled;
+      }
     }
 
     if (isKeyX && isKeyDown && canGuyEnterShip) {
@@ -199,12 +201,12 @@ class OuterSpaceGamePart extends GamePart {
     // Thrusting the space ship
 
     if (isArrowUp && isKeyDown && spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingForward = true;
+      spaceShip.isThrustingUp = true;
       return KeyEventResult.handled;
     } else if (isArrowDown &&
         isKeyDown &&
         spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingBackward = true;
+      spaceShip.isThrustingDown = true;
       return KeyEventResult.handled;
     } else if (isArrowRight &&
         isKeyDown &&
@@ -217,8 +219,8 @@ class OuterSpaceGamePart extends GamePart {
       spaceShip.isThrustingLeft = true;
       return KeyEventResult.handled;
     } else {
-      spaceShip.isThrustingForward = false;
-      spaceShip.isThrustingBackward = false;
+      spaceShip.isThrustingUp = false;
+      spaceShip.isThrustingDown = false;
       spaceShip.isThrustingRight = false;
       spaceShip.isThrustingLeft = false;
     }
@@ -277,8 +279,100 @@ class OuterSpaceGamePart extends GamePart {
   }
 
   void beginDebrisGathering() {
-    spaceShip.inOrbit = false;
-    planet.stopSpinning();
-    spaceShip.driftOut();
+    // spaceShip.inOrbit = false;
+    // rockyMoon.stopSpinning();
+    // spaceShip.driftOut();
+  }
+
+  void alertUserToRadioForeman() {
+    hudComponent.updateMessage("Press C to radio the foreman");
+    canPlayerInitiateDialogue = true;
+  }
+
+  void populateVicinityWithDebris(double maximumXDist, double maximumYDist) {
+    final debris1 = DebrisComponent(
+      srcPath: 'debris/rock_1.png',
+      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      debrisSize: Vector2(113, 113),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris2 = DebrisComponent(
+      srcPath: 'debris/rock_2.png',
+      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      debrisSize: Vector2(70, 70),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris4 = DebrisComponent(
+      srcPath: 'debris/rock_1.png',
+      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      debrisSize: Vector2(113, 113),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris5 = DebrisComponent(
+      srcPath: 'debris/rock_2.png',
+      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      debrisSize: Vector2(70, 70),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris3 = DebrisComponent(
+      srcPath: 'debris/probe_1.png',
+      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      debrisSize: Vector2(194, 176),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+    world.add(debris1);
+    world.add(debris2);
+    world.add(debris3);
+    world.add(debris4);
+    world.add(debris5);
+  }
+
+  Vector2 getRandomPositionWithinBounds(
+      double maximumXDist, double maximumYDist) {
+    final random = Random();
+    final xNeg = random.nextBool();
+    final yNeg = random.nextBool();
+    if (xNeg) {
+      if (yNeg) {
+        final x = random.nextDouble() * maximumXDist;
+        final y = random.nextDouble() * maximumYDist;
+        return Vector2(-x, -y);
+      } else {
+        final x = random.nextDouble() * maximumXDist;
+        final y = random.nextDouble() * maximumYDist;
+        return Vector2(-x, y);
+      }
+    } else {
+      if (yNeg) {
+        final x = random.nextDouble() * maximumXDist;
+        final y = random.nextDouble() * maximumYDist;
+        return Vector2(x, -y);
+      } else {
+        final x = random.nextDouble() * maximumXDist;
+        final y = random.nextDouble() * maximumYDist;
+        return Vector2(x, y);
+      }
+    }
+  }
+
+  double getRandomAngleVelocity() {
+    double angleVelocity;
+    final random = Random();
+    final negative = random.nextBool();
+    if (negative) {
+      angleVelocity = random.nextDouble() * 0.5 * -1;
+    } else {
+      angleVelocity = random.nextDouble() * 0.5;
+    }
+    return angleVelocity;
   }
 }
