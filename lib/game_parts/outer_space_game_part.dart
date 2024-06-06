@@ -19,6 +19,8 @@ class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
   static const double zoomOutMultiplier = 0.5;
+  static const bool isDebugMode = false;
+  bool isSoundEnabled = false;
 
   bool canGuyEnterShip = false;
   bool isGuyOutsideShip = true;
@@ -131,7 +133,7 @@ class OuterSpaceGamePart extends GamePart {
 
   Future<void> exitDialogue() async {
     camera.viewport.remove(dialogueBoxComponent);
-    await FlameAudio.play('beep.mp3');
+    if (isSoundEnabled) await FlameAudio.play('beep.mp3');
   }
 
   @override

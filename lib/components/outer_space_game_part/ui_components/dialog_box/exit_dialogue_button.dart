@@ -39,7 +39,9 @@ class ExitDialogueButton extends SpriteAnimationComponent
   @override
   Future<void> onTapDown(TapDownEvent event) async {
     super.onTapDown(event);
-    await FlameAudio.play('beep.mp3');
+    if (gameRef.isSoundEnabled) {
+      await FlameAudio.play('beep.mp3');
+    }
     gameRef.exitDialogue();
   }
 }
