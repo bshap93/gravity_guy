@@ -1,16 +1,10 @@
 # gravity_guy
 
-Hopping around in gravity
+Started out as a first go at creating a game with a space theme and gravity using Flame game engine. 
 
-## Getting Started
+Has become a longer term project.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Plan as of now...
+- Polish up the rocky moon starting sequence.
+- Have an explorable space station. Have a couple of mini-quests.
+- Release on Itch.io for a dollar. 
