@@ -32,7 +32,7 @@ class SpaceShip extends SpriteAnimationComponent
   bool isThrustingRight = false;
 
   double thrustAngle = 0.0;
-  double thrustPower = 25.0;
+  double thrustPower = 5.0;
 
   InteractionText enterSpaceShipText = InteractionText(
       positionVector: Vector2(0, 0), text: 'Press X to enter', angle: 0);
@@ -87,30 +87,22 @@ class SpaceShip extends SpriteAnimationComponent
 
     velocity += acceleration * dt;
 
-    if (isTakingOff) {
-      sprayParticlesBack(0);
-    }
-
     if (isUnderUserControlledThrust) {}
 
     if (isThrustingUp) {
-      thrustForward();
-      sprayParticlesBack(thrustAngle);
+      thrustUp();
     }
 
     if (isThrustingDown) {
-      thrustBackward();
-      sprayParticlesBack(thrustAngle);
+      thrustDown();
     }
 
     if (isThrustingLeft) {
       thrustLeft();
-      sprayParticlesBack(thrustAngle);
     }
 
     if (isThrustingRight) {
       thrustRight();
-      sprayParticlesBack(thrustAngle);
     }
   }
 
@@ -161,15 +153,15 @@ class SpaceShip extends SpriteAnimationComponent
       (element) => element is RockyMoon,
     ) as RockyMoon;
     final gravityDirection = rockyMoon.position - position;
-    isThrustingDown = true;
+    isThrustingUp = true;
 
-    velocity -= gravityDirection.normalized() * 50;
+    velocity += gravityDirection.normalized() * 10;
     game.camera.viewfinder.position = position;
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       velocity = Vector2.zero();
       rockyMoon.startSpinning();
-      isThrustingDown = false;
+      isThrustingUp = false;
 
       gameRef.alertUserToRadioForeman();
     });
@@ -196,47 +188,31 @@ class SpaceShip extends SpriteAnimationComponent
     }
   }
 
-  void driftOut() {
-    final planet = gameRef.world.children.firstWhere(
-      (element) => element is RockyMoon,
-    ) as RockyMoon;
-    final gravityDirection = planet.position - position;
-    velocity -= gravityDirection.normalized() * thrustPower;
-    isTakingOff = true;
-
-    Future.delayed(const Duration(seconds: 2), () {
-      final hud = gameRef.hudComponent;
-      hud.updateMessage("Thrust forward to navigate the ship.");
-      isUnderUserControlledThrust = true;
-      isTakingOff = false;
-    });
-  }
-
-  void thrustForward() {
+  void thrustDown() {
     final thrustDirection = Vector2(0, -1).normalized();
-    velocity += thrustDirection * thrustPower;
+    velocity = thrustDirection * thrustPower;
     thrustAngle = 0;
-    sprayParticlesBack(thrustAngle);
+    sprayParticlesBack(0);
   }
 
-  void thrustBackward() {
+  void thrustUp() {
     final thrustDirection = Vector2(0, 1).normalized();
-    velocity += thrustDirection * thrustPower;
+    velocity = thrustDirection * thrustPower;
     thrustAngle = pi;
-    sprayParticlesBack(thrustAngle);
+    sprayParticlesBack(0);
   }
 
   void thrustLeft() {
     final thrustDirection = Vector2(-1, 0).normalized();
-    velocity += thrustDirection * thrustPower;
+    velocity = thrustDirection * thrustPower;
     thrustAngle = -pi / 2;
-    sprayParticlesBack(thrustAngle);
+    sprayParticlesBack(0);
   }
 
   void thrustRight() {
     final thrustDirection = Vector2(1, 0).normalized();
-    velocity += thrustDirection * thrustPower;
+    velocity = thrustDirection * thrustPower;
     thrustAngle = pi / 2;
-    sprayParticlesBack(thrustAngle);
+    sprayParticlesBack(0);
   }
 }
