@@ -6,6 +6,7 @@ import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:gravity_guy/components/outer_space_game_part/environment_components/space_station_exterior.dart';
 
 import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
@@ -18,7 +19,7 @@ import '../hud.dart';
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
-  static const double zoomOutMultiplier = 2;
+  static const double zoomOutMultiplier = 1;
   static const bool isDebugMode = false;
   bool isSoundEnabled = false;
 
@@ -44,7 +45,7 @@ class OuterSpaceGamePart extends GamePart {
   //
   @override
   Future<void> onLoad() async {
-    debugMode = false;
+    debugMode = true;
     await Flame.images.load('astronaut4.png');
     await Flame.images.load('Lunar_03-512x512.png');
     await Flame.images.load('spr_stars02.png');
@@ -80,8 +81,8 @@ class OuterSpaceGamePart extends GamePart {
     world.add(rockyMoon);
 
     populateVicinityWithDebris(
-      500,
-      500,
+      150,
+      150,
     );
 
     astronaut =
@@ -101,6 +102,12 @@ class OuterSpaceGamePart extends GamePart {
       astronaut,
     );
     camera.viewfinder.anchor = Anchor.center;
+
+    world.add(SpaceStationExterior());
+
+    /// Inital setup done
+    ///
+    // spaceShip.blastOff();
   }
 
   @override
@@ -276,6 +283,7 @@ class OuterSpaceGamePart extends GamePart {
   }
 
   void beginDebrisGathering() {
+    spaceShip.isUnderUserControlledThrust = true;
     // spaceShip.inOrbit = false;
     // rockyMoon.stopSpinning();
     // spaceShip.driftOut();
@@ -289,7 +297,7 @@ class OuterSpaceGamePart extends GamePart {
   void populateVicinityWithDebris(double maximumXDist, double maximumYDist) {
     final debris1 = DebrisComponent(
       srcPath: 'debris/rock_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(950, 1190),
       debrisSize: Vector2(113, 113),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -297,7 +305,7 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris2 = DebrisComponent(
       srcPath: 'debris/rock_2.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(-250, 1150),
       debrisSize: Vector2(70, 70),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -305,7 +313,7 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris4 = DebrisComponent(
       srcPath: 'debris/rock_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(-50, 1200),
       debrisSize: Vector2(113, 113),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -313,7 +321,23 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris5 = DebrisComponent(
       srcPath: 'debris/rock_2.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(-390, 1100),
+      debrisSize: Vector2(70, 70),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris6 = DebrisComponent(
+      srcPath: 'debris/rock_1.png',
+      positionVar: Vector2(900, 1450),
+      debrisSize: Vector2(113, 113),
+      startingAngle: 0.0,
+      angleVelocity: getRandomAngleVelocity(),
+    );
+
+    final debris7 = DebrisComponent(
+      srcPath: 'debris/rock_2.png',
+      positionVar: Vector2(0, 1500),
       debrisSize: Vector2(70, 70),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -321,7 +345,7 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris3 = DebrisComponent(
       srcPath: 'debris/probe_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(1200, 1100),
       debrisSize: Vector2(194, 176),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -331,34 +355,8 @@ class OuterSpaceGamePart extends GamePart {
     world.add(debris3);
     world.add(debris4);
     world.add(debris5);
-  }
-
-  Vector2 getRandomPositionWithinBounds(
-      double maximumXDist, double maximumYDist) {
-    final random = Random();
-    final xNeg = random.nextBool();
-    final yNeg = random.nextBool();
-    if (xNeg) {
-      if (yNeg) {
-        final x = random.nextDouble() * maximumXDist;
-        final y = random.nextDouble() * maximumYDist;
-        return Vector2(-x, -y);
-      } else {
-        final x = random.nextDouble() * maximumXDist;
-        final y = random.nextDouble() * maximumYDist;
-        return Vector2(-x, y);
-      }
-    } else {
-      if (yNeg) {
-        final x = random.nextDouble() * maximumXDist;
-        final y = random.nextDouble() * maximumYDist;
-        return Vector2(x, -y);
-      } else {
-        final x = random.nextDouble() * maximumXDist;
-        final y = random.nextDouble() * maximumYDist;
-        return Vector2(x, y);
-      }
-    }
+    world.add(debris6);
+    world.add(debris7);
   }
 
   double getRandomAngleVelocity() {

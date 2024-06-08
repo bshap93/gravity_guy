@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "archive",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.0",
+      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -128,16 +128,10 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "flame_forge2d",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/flame_forge2d-0.18.1",
+      "name": "flame_tiled",
+      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/flame_tiled-1.20.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
-    },
-    {
-      "name": "flame_tiled",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/flame_tiled-1.20.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "flutter",
@@ -162,12 +156,6 @@
       "rootUri": "file:///E:/Flutter/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
-    },
-    {
-      "name": "forge2d",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/forge2d-0.13.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "google_fonts",
@@ -249,9 +237,9 @@
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.4",
+      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.5",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.4"
     },
     {
       "name": "path_provider_foundation",
@@ -410,7 +398,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-06T23:23:56.219586Z",
+  "generated": "2024-06-08T17:30:39.375637Z",
   "generator": "pub",
   "generatorVersion": "3.4.1",
   "flutterRoot": "file:///E:/Flutter/flutter",

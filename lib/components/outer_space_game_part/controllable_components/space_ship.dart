@@ -32,7 +32,7 @@ class SpaceShip extends SpriteAnimationComponent
   bool isThrustingRight = false;
 
   double thrustAngle = 0.0;
-  double thrustPower = 5.0;
+  double thrustPower = 100.0;
 
   InteractionText enterSpaceShipText = InteractionText(
       positionVector: Vector2(0, 0), text: 'Press X to enter', angle: 0);
@@ -62,7 +62,7 @@ class SpaceShip extends SpriteAnimationComponent
     playing = false;
     add(RectangleHitbox(
       size: Vector2(width, height),
-      position: Vector2(0, 0),
+      position: Vector2(110, 40),
       anchor: Anchor.center,
     ));
   }
@@ -86,8 +86,6 @@ class SpaceShip extends SpriteAnimationComponent
     position += velocity * dt;
 
     velocity += acceleration * dt;
-
-    if (isUnderUserControlledThrust) {}
 
     if (isThrustingUp) {
       thrustUp();
@@ -158,12 +156,14 @@ class SpaceShip extends SpriteAnimationComponent
     velocity += gravityDirection.normalized() * 10;
     game.camera.viewfinder.position = position;
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       velocity = Vector2.zero();
       rockyMoon.startSpinning();
       isThrustingUp = false;
 
       gameRef.alertUserToRadioForeman();
+      isUnderUserControlledThrust = true;
+      gameRef.camera.freeze();
     });
   }
 
@@ -215,4 +215,8 @@ class SpaceShip extends SpriteAnimationComponent
     thrustAngle = pi / 2;
     sprayParticlesBack(0);
   }
+}
+
+extension FreezeCamera on CameraComponent {
+  void freeze() {}
 }

@@ -7,6 +7,7 @@ import '../../../../game_parts/outer_space_game_part.dart';
 
 class ContinueButtonComponent extends PositionComponent
     with TapCallbacks, HasGameRef<OuterSpaceGamePart> {
+  @override
   final Anchor anchor;
   final Function onTap;
 
@@ -31,10 +32,10 @@ class ContinueButtonComponent extends PositionComponent
     priority = 20;
 
     add(SpriteComponent(
-      size: size,
-      anchor: anchor,
-      sprite: continueButtonSprite,
-    ));
+        size: size,
+        anchor: anchor,
+        sprite: continueButtonSprite,
+        position: Vector2(50, 25)));
 
     TextStyle? style = const TextStyle(
       color: Colors.black,
@@ -44,7 +45,7 @@ class ContinueButtonComponent extends PositionComponent
     add(TextComponent(
       text: 'Continue',
       priority: priority + 1,
-      position: Vector2(0, 0),
+      position: Vector2(50, 25),
       anchor: Anchor.center,
       textRenderer: TextPaint(
         style: style,
