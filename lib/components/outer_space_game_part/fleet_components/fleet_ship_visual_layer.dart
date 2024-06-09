@@ -8,14 +8,18 @@ class FleetShipVisualLayer extends SpriteAnimationComponent
     with HasGameRef<OuterSpaceGamePart> {
   Vector2 textureSize;
   Vector2 parentSize;
+  String shipImageName;
   int parentPriority;
   int bobAmount;
+  double parentAngle;
   late Shield shield;
 
   FleetShipVisualLayer({
     required this.textureSize,
     required this.parentSize,
     required this.parentPriority,
+    required this.parentAngle,
+    required this.shipImageName,
     this.bobAmount = 10,
   });
 
@@ -27,7 +31,7 @@ class FleetShipVisualLayer extends SpriteAnimationComponent
     position = Vector2.zero();
 
     animation = await game.loadSpriteAnimation(
-        'space_ships/capital_ship_01.png',
+        'space_ships/$shipImageName.png',
         SpriteAnimationData.sequenced(
           amount: 1,
           stepTime: 0.1,
@@ -45,8 +49,11 @@ class FleetShipVisualLayer extends SpriteAnimationComponent
   }
 
   void bobInPlace() {
-    final ec = RepeatedEffectController(SineEffectController(period: 2), 5);
-    final effect = MoveByEffect(Vector2(0, 10), ec);
-    add(effect);
+    if (gameRef.isBobbingEnabled) {
+      final ec =
+          RepeatedEffectController(SineEffectController(period: 2), bobAmount);
+      final effect = MoveByEffect(Vector2(0, 5), ec);
+      add(effect);
+    }
   }
 }

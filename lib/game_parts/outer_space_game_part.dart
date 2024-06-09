@@ -23,6 +23,7 @@ class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetMass = 10000; // KG ??
   static const double zoomOutMultiplier = 1;
   static const bool isDebugMode = true;
+  bool isBobbingEnabled = false;
   bool isSoundEnabled = false;
 
   bool canGuyEnterShip = false;
@@ -96,9 +97,9 @@ class OuterSpaceGamePart extends GamePart {
     spaceShip = SpaceShip(initialAngle: pi / 2);
     world.add(spaceShip);
 
-    // spaceStationExterior = SpaceStationExterior();
-    //
-    // world.add(spaceStationExterior);
+    fleet = Fleet();
+
+    world.add(fleet);
 
     hudComponent = HUDComponent();
     camera.viewport.add(hudComponent);

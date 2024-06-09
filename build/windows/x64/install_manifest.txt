@@ -23,6 +23,7 @@ C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/window
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/scifi_space_rpg_tiles_lpcized.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spaceship_02.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spaceship_11.png
+C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_ships/capital_ship_01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_station_exterior.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars02.png

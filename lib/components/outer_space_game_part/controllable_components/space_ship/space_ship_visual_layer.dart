@@ -42,9 +42,11 @@ class SpaceShipVisualLayer extends SpriteAnimationComponent
   }
 
   void bobInPlace() {
-    final ec = RepeatedEffectController(SineEffectController(period: 2), 5);
-    final effect = MoveByEffect(Vector2(0, 10), ec);
-    add(effect);
+    if (gameRef.isBobbingEnabled) {
+      final ec = RepeatedEffectController(SineEffectController(period: 2), 5);
+      final effect = MoveByEffect(Vector2(0, 5), ec);
+      add(effect);
+    }
   }
 
   void sprayParticlesBack(double angle) {

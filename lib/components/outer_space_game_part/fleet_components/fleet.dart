@@ -6,6 +6,8 @@ import 'fleet_ship.dart';
 class Fleet extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
   late List<FleetShip> fleetShips;
 
+  late FleetShip capitalShip;
+
   Fleet();
 
   @override
@@ -13,12 +15,22 @@ class Fleet extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
     super.onLoad();
     fleetShips = [];
 
-    final FleetShip capitalShip = FleetShip(
-      positionVector: Vector2(
-        512,
-        1024,
-      ),
-      initialAngle: 3.33794219,
-    );
+    capitalShip = FleetShip(
+        positionVector: Vector2(
+          1000,
+          2200,
+        ),
+        initialAngle: 3.33794219,
+        shipImageName: 'capital_ship_01',
+        textureSize: Vector2(496, 128),
+        parentSize: Vector2(992, 256));
+
+    add(capitalShip);
+
+    // fleetShips.add(capitalShip);
+    //
+    // for (final FleetShip fleetShip in fleetShips) {
+    //   add(fleetShip);
+    // }
   }
 }
