@@ -11,8 +11,8 @@ import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
 import '../components/outer_space_game_part/controllable_components/space_ship/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/debris_component.dart';
-import '../components/outer_space_game_part/environment_components/rocky_moon.dart';
-import '../components/outer_space_game_part/environment_components/space_station_exterior.dart';
+import '../components/outer_space_game_part/environment_components/rocky_moon/rocky_moon.dart';
+import '../components/outer_space_game_part/fleet_components/fleet.dart';
 import '../components/outer_space_game_part/ui_components/dialog_box/dialogue_box_large.dart';
 import '../hud.dart';
 
@@ -38,6 +38,7 @@ class OuterSpaceGamePart extends GamePart {
   late AstronautOutdoorCharacterPart astronaut;
   late SpaceShip spaceShip;
   late RockyMoon rockyMoon;
+  late Fleet fleet;
 
   TextStyle mainTextFontStyle = const TextStyle(
     color: Color(0xFFD9BB26),
@@ -45,8 +46,6 @@ class OuterSpaceGamePart extends GamePart {
     fontFamily: 'Roboto',
   );
 
-  late SpaceStationExterior spaceStationExterior;
-  //
   @override
   Future<void> onLoad() async {
     debugMode = isDebugMode;
@@ -97,9 +96,9 @@ class OuterSpaceGamePart extends GamePart {
     spaceShip = SpaceShip(initialAngle: pi / 2);
     world.add(spaceShip);
 
-    spaceStationExterior = SpaceStationExterior();
-
-    world.add(spaceStationExterior);
+    // spaceStationExterior = SpaceStationExterior();
+    //
+    // world.add(spaceStationExterior);
 
     hudComponent = HUDComponent();
     camera.viewport.add(hudComponent);

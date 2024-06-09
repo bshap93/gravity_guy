@@ -2,16 +2,26 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+enum ShieldType { defaultShield }
+
 class Shield extends SpriteComponent with CollisionCallbacks {
-  Shield({required Vector2 position}) {
-    width = 250;
-    height = 250;
+  final double ellipseHeight;
+  final double ellipseWidth;
+  final ShieldType shieldType;
+  Shield({
+    required Vector2 position,
+    required this.ellipseHeight,
+    required this.ellipseWidth,
+    this.shieldType = ShieldType.defaultShield,
+  }) {
     anchor = Anchor.center;
     this.position = position;
   }
 
   @override
   Future<void> onLoad() async {
+    width = ellipseWidth;
+    height = ellipseHeight;
     opacity = 0;
 
     await super.onLoad();
@@ -20,7 +30,7 @@ class Shield extends SpriteComponent with CollisionCallbacks {
     sprite = shieldSprite;
 
     add(CircleHitbox(
-      radius: 120,
+      radius: ellipseHeight / 2,
     ));
   }
 

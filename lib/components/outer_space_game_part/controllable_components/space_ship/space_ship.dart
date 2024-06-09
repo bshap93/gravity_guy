@@ -6,7 +6,7 @@ import 'package:gravity_guy/components/outer_space_game_part/controllable_compon
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/interaction_text.dart';
 
 import '../../../../game_parts/outer_space_game_part.dart';
-import '../../environment_components/rocky_moon.dart';
+import '../../environment_components/rocky_moon/rocky_moon.dart';
 import '../astronaut_outdoor_character_part.dart';
 
 class SpaceShip extends PositionComponent
@@ -42,7 +42,7 @@ class SpaceShip extends PositionComponent
       : super(
             // size: ,
             anchor: Anchor.center,
-            angle: pi + pi / 16);
+            angle: 3.33794219);
 
   @override
   Future<void> onLoad() async {

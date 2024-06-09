@@ -34,7 +34,10 @@ class SpaceShipVisualLayer extends SpriteAnimationComponent
         ));
 
     playing = false;
-    shield = Shield(position: Vector2(width / 2, height / 2));
+    shield = Shield(
+        position: Vector2(width / 2, height / 2),
+        ellipseHeight: 250,
+        ellipseWidth: 250);
     add(shield);
   }
 

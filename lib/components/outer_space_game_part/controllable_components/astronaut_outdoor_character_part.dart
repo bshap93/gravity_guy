@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:gravity_guy/components/outer_space_game_part/environment_components/rocky_moon.dart';
+import 'package:gravity_guy/components/outer_space_game_part/environment_components/rocky_moon/rocky_moon.dart';
 import 'package:gravity_guy/helpers/helpers.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
