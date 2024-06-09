@@ -1,6 +1,6 @@
-^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITY_GUY\WINDOWS\RUNNER\CMAKELISTS.TXT
+^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITYGUYOVERVIEW\6.8.24\GRAVITY_GUY\WINDOWS\RUNNER\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/gravity_guy/windows -BC:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64 --check-stamp-file C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/runner/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/windows -BC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64 --check-stamp-file C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

@@ -1,6 +1,6 @@
-^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\A508DF8E89C7D1F4257D83A65DAE99A9\FLUTTER_WINDOWS.DLL.RULE
+^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITYGUYOVERVIEW\6.8.24\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\DA3F164090BADF8CBC4A6852D0562FFC\FLUTTER_WINDOWS.DLL.RULE
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=E:\Flutter\flutter PROJECT_DIR=C:\Users\bshap\StudioProjects\gravity_guy FLUTTER_ROOT=E:\Flutter\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\bshap\StudioProjects\gravity_guy\windows\flutter\ephemeral PROJECT_DIR=C:\Users\bshap\StudioProjects\gravity_guy FLUTTER_TARGET=C:\Users\bshap\StudioProjects\gravity_guy\lib\main.dart DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQ0FOVkFTS0lUX1VSTD1odHRwczovL3d3dy5nc3RhdGljLmNvbS9mbHV0dGVyLWNhbnZhc2tpdC81NWVhZTY4NjRiMjk2ZGQ5ZjQzYjJjYzc1NzdlYzI1NmU1YzMyYThkLw== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\bshap\StudioProjects\gravity_guy\.dart_tool\package_config.json E:/Flutter/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=E:\Flutter\flutter PROJECT_DIR=C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy FLUTTER_ROOT=E:\Flutter\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\windows\flutter\ephemeral PROJECT_DIR=C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy FLUTTER_TARGET=C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\lib\main.dart DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQ0FOVkFTS0lUX1VSTD1odHRwczovL3d3dy5nc3RhdGljLmNvbS9mbHV0dGVyLWNhbnZhc2tpdC9lZGQ4NTQ2MTE2NDU3YmRmMWM1YmRmYjEzZWNiOTQ2M2QyYmI1ZWQ0Lw== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\.dart_tool\package_config.json E:/Flutter/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
@@ -8,7 +8,7 @@ endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd
-^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\22B7D55C5DCA1A9D172BAFF60F3356F7\FLUTTER_ASSEMBLE.RULE
+^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITYGUYOVERVIEW\6.8.24\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\05366348570228FBC91FEA0867051A33\FLUTTER_ASSEMBLE.RULE
 setlocal
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
@@ -16,9 +16,9 @@ endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd
-^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITY_GUY\WINDOWS\FLUTTER\CMAKELISTS.TXT
+^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITYGUYOVERVIEW\6.8.24\GRAVITY_GUY\WINDOWS\FLUTTER\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/gravity_guy/windows -BC:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64 --check-stamp-file C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/flutter/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/windows -BC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64 --check-stamp-file C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/flutter/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/bshap/StudioProjects/gravity_guy/windows/flutter
+# Install script for directory: C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/windows/flutter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

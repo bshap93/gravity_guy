@@ -2,22 +2,22 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\x64\Debug\ZERO_CHECK</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\x64\Debug\ZERO_CHECK</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\flutter\x64\Debug\flutter_assemble</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\flutter\x64\Debug\flutter_assemble</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\plugins\audioplayers_windows\Debug\audioplayers_windows_plugin.dll</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\plugins\audioplayers_windows\Debug\audioplayers_windows_plugin.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\runner\Debug\gravity_guy.exe</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\runner\Debug\gravity_guy.exe</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\x64\Debug\ALL_BUILD</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\x64\Debug\ALL_BUILD</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\bshap\StudioProjects\gravity_guy\build\windows\x64\x64\Debug\INSTALL</FullPath>
+      <FullPath>C:\Users\bshap\StudioProjects\GravityGuyOverview\6.8.24\gravity_guy\build\windows\x64\x64\Debug\INSTALL</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

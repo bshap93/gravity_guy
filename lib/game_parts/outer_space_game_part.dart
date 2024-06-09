@@ -9,17 +9,20 @@ import 'package:flutter/services.dart';
 
 import '../components/inherited_components/game_part.dart';
 import '../components/outer_space_game_part/controllable_components/astronaut_outdoor_character_part.dart';
-import '../components/outer_space_game_part/controllable_components/space_ship.dart';
+import '../components/outer_space_game_part/controllable_components/space_ship/space_ship.dart';
 import '../components/outer_space_game_part/environment_components/debris_component.dart';
 import '../components/outer_space_game_part/environment_components/rocky_moon.dart';
+import '../components/outer_space_game_part/environment_components/space_station_exterior.dart';
 import '../components/outer_space_game_part/ui_components/dialog_box/dialogue_box_large.dart';
 import '../hud.dart';
+
+part 'outer_space_game_part_input.dart';
 
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
-  static const double zoomOutMultiplier = 2;
-  static const bool isDebugMode = false;
+  static const double zoomOutMultiplier = 1;
+  static const bool isDebugMode = true;
   bool isSoundEnabled = false;
 
   bool canGuyEnterShip = false;
@@ -41,10 +44,12 @@ class OuterSpaceGamePart extends GamePart {
     fontSize: 12,
     fontFamily: 'Roboto',
   );
+
+  late SpaceStationExterior spaceStationExterior;
   //
   @override
   Future<void> onLoad() async {
-    debugMode = false;
+    debugMode = isDebugMode;
     await Flame.images.load('astronaut4.png');
     await Flame.images.load('Lunar_03-512x512.png');
     await Flame.images.load('spr_stars02.png');
@@ -89,9 +94,12 @@ class OuterSpaceGamePart extends GamePart {
     world.add(astronaut);
 
     // Space ship on the other side of the moon
-    spaceShip =
-        SpaceShip(initialPosition: Vector2(1000, 1000), initialAngle: pi / 2);
+    spaceShip = SpaceShip(initialAngle: pi / 2);
     world.add(spaceShip);
+
+    spaceStationExterior = SpaceStationExterior();
+
+    world.add(spaceStationExterior);
 
     hudComponent = HUDComponent();
     camera.viewport.add(hudComponent);
@@ -148,6 +156,7 @@ class OuterSpaceGamePart extends GamePart {
     final isArrowLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isArrowUp = keysPressed.contains(LogicalKeyboardKey.arrowUp);
     final isArrowDown = keysPressed.contains(LogicalKeyboardKey.arrowDown);
+    final isKeySpace = keysPressed.contains(LogicalKeyboardKey.space);
 
     final wasArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
@@ -203,22 +212,32 @@ class OuterSpaceGamePart extends GamePart {
     // Thrusting the space ship
 
     if (isArrowUp && isKeyDown && spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingUp = true;
+      spaceShip.thrustingUp = true;
       return KeyEventResult.handled;
     } else if (isArrowDown &&
         isKeyDown &&
         spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingDown = true;
+      spaceShip.thrustingDown = true;
       return KeyEventResult.handled;
     } else if (isArrowRight &&
         isKeyDown &&
         spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingRight = true;
+      spaceShip.thrustingRight = true;
       return KeyEventResult.handled;
     } else if (isArrowLeft &&
         isKeyDown &&
         spaceShip.isUnderUserControlledThrust) {
-      spaceShip.isThrustingLeft = true;
+      spaceShip.thrustingLeft = true;
+      return KeyEventResult.handled;
+    } else if (isKeySpace &&
+        isKeyDown &&
+        spaceShip.isUnderUserControlledThrust) {
+      spaceShip.thrustingUp = false;
+      spaceShip.thrustingDown = false;
+      spaceShip.thrustingLeft = false;
+      spaceShip.thrustingRight = false;
+      spaceShip.cutThrust();
+
       return KeyEventResult.handled;
     }
 
@@ -289,7 +308,7 @@ class OuterSpaceGamePart extends GamePart {
   void populateVicinityWithDebris(double maximumXDist, double maximumYDist) {
     final debris1 = DebrisComponent(
       srcPath: 'debris/rock_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(800, -240),
       debrisSize: Vector2(113, 113),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -305,7 +324,7 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris4 = DebrisComponent(
       srcPath: 'debris/rock_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(1100, 500),
       debrisSize: Vector2(113, 113),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -321,7 +340,7 @@ class OuterSpaceGamePart extends GamePart {
 
     final debris3 = DebrisComponent(
       srcPath: 'debris/probe_1.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+      positionVar: Vector2(160, -200),
       debrisSize: Vector2(194, 176),
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
@@ -366,9 +385,9 @@ class OuterSpaceGamePart extends GamePart {
     final random = Random();
     final negative = random.nextBool();
     if (negative) {
-      angleVelocity = random.nextDouble() * 0.5 * -1;
+      angleVelocity = (random.nextDouble() * 0.1 + 0.1) * -1;
     } else {
-      angleVelocity = random.nextDouble() * 0.5;
+      angleVelocity = (random.nextDouble() * 0.1) + 0.1;
     }
     return angleVelocity;
   }

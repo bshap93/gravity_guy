@@ -74,9 +74,9 @@ class AstronautOutdoorCharacterPart extends SpriteAnimationComponent
     add(CircleHitbox(
       // This *2 was a sorta hack way to have him collide with the planet
       // at his feet, but it's not perfect.
-      radius: 50,
+      radius: 25,
       position: Vector2(0, 0),
-      anchor: Anchor.center,
+      anchor: Anchor.topLeft,
     ));
 
     add(goRightText);

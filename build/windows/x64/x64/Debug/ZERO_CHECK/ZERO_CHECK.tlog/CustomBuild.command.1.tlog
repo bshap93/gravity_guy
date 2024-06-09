@@ -1,6 +1,6 @@
-^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\41EC49D4978733AA7EAEBF6C01925138\GENERATE.STAMP.RULE
+^C:\USERS\BSHAP\STUDIOPROJECTS\GRAVITYGUYOVERVIEW\6.8.24\GRAVITY_GUY\BUILD\WINDOWS\X64\CMAKEFILES\09491686377EC2B0759532D6ADE194B7\GENERATE.STAMP.RULE
 setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/gravity_guy/windows -BC:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/bshap/StudioProjects/gravity_guy/build/windows/x64/gravity_guy.sln
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/windows -BC:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/gravity_guy.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
