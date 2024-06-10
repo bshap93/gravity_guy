@@ -26,11 +26,5 @@ class Fleet extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
         parentSize: Vector2(992, 256));
 
     add(capitalShip);
-
-    // fleetShips.add(capitalShip);
-    //
-    // for (final FleetShip fleetShip in fleetShips) {
-    //   add(fleetShip);
-    // }
   }
 }

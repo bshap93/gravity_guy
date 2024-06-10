@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flutter/foundation.dart';
 import 'package:gravity_guy/components/outer_space_game_part/controllable_components/space_ship/space_ship_visual_layer.dart';
 import 'package:gravity_guy/components/outer_space_game_part/ui_components/interaction_text.dart';
 
@@ -29,6 +30,7 @@ class SpaceShip extends PositionComponent
   bool inOrbit = false;
   bool isTakingOff = false;
   bool isUnderUserControlledThrust = false;
+  bool docked = false;
 
   bool thrustingUp = false;
   bool thrustingDown = false;
@@ -37,7 +39,7 @@ class SpaceShip extends PositionComponent
   bool bobbing = false;
 
   double thrustAngle = 0.0;
-  double thrustPower = 75.0;
+  double thrustPower = 150.0;
 
   InteractionText enterSpaceShipText = InteractionText(
       positionVector: Vector2(0, 0), text: 'Press X to enter', angle: 0);
@@ -100,6 +102,17 @@ class SpaceShip extends PositionComponent
     game.isGuyOutsideShip = false;
   }
 
+  void dockWith(FleetShip fleetShip) {
+    final effect = MoveToEffect(
+      Vector2(550, 1870),
+      target: this,
+      EffectController(duration: 2),
+    );
+    add(effect);
+    docked = true;
+    bobbing = false;
+  }
+
   void thrustDown() {
     final thrustDirection = Vector2(0, -1).normalized();
     velocity = thrustDirection * thrustPower;
@@ -133,10 +146,14 @@ class SpaceShip extends PositionComponent
     spaceShipVisualLayer.bobInPlace();
   }
 
+  /// The shield will do a fade in and out effect. Physics will
+  /// in the future be involved.
   void engageShield() {
     spaceShipVisualLayer.shield.engage();
   }
 
+  /// This is a list of things that will happen when the user enters
+  /// the spaceship for the first time.
   void blastOff() {
     final rockyMoon = gameRef.world.children.firstWhere(
       (element) => element is RockyMoon,
@@ -160,26 +177,13 @@ class SpaceShip extends PositionComponent
     });
   }
 
-  void dockWithFleetShip() {
-    if (dockableFleetShips.isEmpty) {
-      return;
-    } else if (dockableFleetShips.length == 1) {
-      final fleetShipDockPosition =
-          dockableFleetShips.first.fleetShipDock.position;
-      final moveToEffect = MoveToEffect(
-        fleetShipDockPosition,
-        target: this,
-        EffectController(duration: 1),
-      );
-      add(moveToEffect);
-    }
-  }
-
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is AstronautOutdoorCharacterPart) {
-      print('Astronaut is touching spaceship');
+      if (kDebugMode) {
+        print('Astronaut is touching spaceship');
+      }
       isTouchedByAstronaut = true;
       add(enterSpaceShipText);
       game.canGuyEnterShip = true;

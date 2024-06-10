@@ -3,7 +3,6 @@ import 'package:flame/components.dart';
 import 'package:gravity_guy/components/outer_space_game_part/controllable_components/space_ship/space_ship.dart';
 
 import '../../../game_parts/outer_space_game_part.dart';
-import 'fleet_ship_dock.dart';
 import 'fleet_ship_visual_layer.dart';
 
 class FleetShip extends PositionComponent
@@ -21,7 +20,7 @@ class FleetShip extends PositionComponent
   final String shipImageName;
   final Vector2 textureSize;
   final Vector2 parentSize;
-  late FleetShipDock fleetShipDock;
+  late List<Vector2> dockingPositions = [];
 
   late FleetShipVisualLayer fleetShipVisualLayer;
   late RectangleHitbox interactionRange;
@@ -50,9 +49,8 @@ class FleetShip extends PositionComponent
 
     add(interactionRange);
 
-    fleetShipDock = FleetShipDock(
-      dockingPosition: Vector2(center.x, center.y),
-      initialAngle: initialAngle,
+    dockingPositions.add(
+      Vector2(0.5 * parentSize.x, 0.5 * parentSize.y),
     );
   }
 

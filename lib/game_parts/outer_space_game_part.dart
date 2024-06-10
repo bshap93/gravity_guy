@@ -23,7 +23,7 @@ class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetMass = 10000; // KG ??
   static const double zoomOutMultiplier = 1;
   static const bool isDebugMode = true;
-  bool isBobbingEnabled = false;
+  bool isBobbingEnabled = true;
   bool isSoundEnabled = false;
 
   bool canGuyEnterShip = false;
@@ -157,6 +157,7 @@ class OuterSpaceGamePart extends GamePart {
     final isArrowUp = keysPressed.contains(LogicalKeyboardKey.arrowUp);
     final isArrowDown = keysPressed.contains(LogicalKeyboardKey.arrowDown);
     final isKeySpace = keysPressed.contains(LogicalKeyboardKey.space);
+    final isKeyD = keysPressed.contains(LogicalKeyboardKey.keyD);
 
     final wasArrowRight = event.logicalKey == LogicalKeyboardKey.arrowRight;
     final wasArrowLeft = event.logicalKey == LogicalKeyboardKey.arrowLeft;
@@ -206,6 +207,14 @@ class OuterSpaceGamePart extends GamePart {
     /// The astronaut bounds to the left if it is touching the planet
     if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
       boundLeftOverview();
+      return KeyEventResult.handled;
+    }
+
+    if (isKeyD && isKeyDown) {
+      if (spaceShip.dockableFleetShips.isNotEmpty) {
+        spaceShip.dockWith(spaceShip.dockableFleetShips.first);
+      }
+
       return KeyEventResult.handled;
     }
 
@@ -306,37 +315,37 @@ class OuterSpaceGamePart extends GamePart {
   }
 
   void populateVicinityWithDebris(double maximumXDist, double maximumYDist) {
-    final debris1 = DebrisComponent(
-      srcPath: 'debris/rock_1.png',
-      positionVar: Vector2(800, -240),
-      debrisSize: Vector2(113, 113),
-      startingAngle: 0.0,
-      angleVelocity: getRandomAngleVelocity(),
-    );
-
-    final debris2 = DebrisComponent(
-      srcPath: 'debris/rock_2.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
-      debrisSize: Vector2(70, 70),
-      startingAngle: 0.0,
-      angleVelocity: getRandomAngleVelocity(),
-    );
-
-    final debris4 = DebrisComponent(
-      srcPath: 'debris/rock_1.png',
-      positionVar: Vector2(1100, 500),
-      debrisSize: Vector2(113, 113),
-      startingAngle: 0.0,
-      angleVelocity: getRandomAngleVelocity(),
-    );
-
-    final debris5 = DebrisComponent(
-      srcPath: 'debris/rock_2.png',
-      positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
-      debrisSize: Vector2(70, 70),
-      startingAngle: 0.0,
-      angleVelocity: getRandomAngleVelocity(),
-    );
+    // final debris1 = DebrisComponent(
+    //   srcPath: 'debris/rock_1.png',
+    //   positionVar: Vector2(800, -240),
+    //   debrisSize: Vector2(113, 113),
+    //   startingAngle: 0.0,
+    //   angleVelocity: getRandomAngleVelocity(),
+    // );
+    //
+    // final debris2 = DebrisComponent(
+    //   srcPath: 'debris/rock_2.png',
+    //   positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+    //   debrisSize: Vector2(70, 70),
+    //   startingAngle: 0.0,
+    //   angleVelocity: getRandomAngleVelocity(),
+    // );
+    //
+    // final debris4 = DebrisComponent(
+    //   srcPath: 'debris/rock_1.png',
+    //   positionVar: Vector2(1100, 500),
+    //   debrisSize: Vector2(113, 113),
+    //   startingAngle: 0.0,
+    //   angleVelocity: getRandomAngleVelocity(),
+    // );
+    //
+    // final debris5 = DebrisComponent(
+    //   srcPath: 'debris/rock_2.png',
+    //   positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
+    //   debrisSize: Vector2(70, 70),
+    //   startingAngle: 0.0,
+    //   angleVelocity: getRandomAngleVelocity(),
+    // );
 
     final debris3 = DebrisComponent(
       srcPath: 'debris/probe_1.png',
@@ -345,11 +354,9 @@ class OuterSpaceGamePart extends GamePart {
       startingAngle: 0.0,
       angleVelocity: getRandomAngleVelocity(),
     );
-    world.add(debris1);
-    world.add(debris2);
+    // world.add(debris1);
+    // world.add(debris2);
     world.add(debris3);
-    world.add(debris4);
-    world.add(debris5);
   }
 
   Vector2 getRandomPositionWithinBounds(
