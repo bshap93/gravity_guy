@@ -15,7 +15,7 @@ class DialogueBoxLarge extends PositionComponent
   late CharacterAvatar characterAvatar;
   late CharacterAvatar npcAvatar;
   late SpriteComponent avatarBackdrop;
-  late ScriptDialogInteraction scriptDialogInteraction;
+  List<ScriptDialogInteraction> scriptDialogInteraction = [];
 
   DialogueBoxLarge()
       : super(
@@ -69,10 +69,16 @@ class DialogueBoxLarge extends PositionComponent
       position: Vector2(20, -170),
     ));
 
-    scriptDialogInteraction = ScriptDialogInteraction(
-      text:
-          'You know the drill... get all the debris half a klick sunward. Stay safe!',
-    );
+    scriptDialogInteraction.add(ScriptDialogInteraction(
+        text: 'I just received word from the folks in Ad Hoc 37. '
+            'Their attitude thrusters are acting up and they insist on '
+            'remaining outside the core of the fleet, and refuse to let '
+            'us retrofit their ships with swarm collective AI units.'));
+
+    scriptDialogInteraction.add(ScriptDialogInteraction(
+        text: 'Now they call me up, hysterical and demanding our help. '
+            'I told \' em you\'d do it if they make it worth your while. '
+            '1000 Iridium credits.'));
 
     add(ContinueButtonComponent(
       position: Vector2(0, 200),
@@ -84,7 +90,7 @@ class DialogueBoxLarge extends PositionComponent
       },
     ));
 
-    add(scriptDialogInteraction);
+    add(scriptDialogInteraction.first);
 
     add(boxForDialogue);
 

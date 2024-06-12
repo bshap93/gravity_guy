@@ -110,7 +110,8 @@ class SpaceShip extends PositionComponent
     );
     add(effect);
     docked = true;
-    bobbing = false;
+    spaceShipVisualLayer.stopBobbing();
+    gameRef.hudComponent.updateMessage('Press X to board');
   }
 
   void thrustDown() {

@@ -50,10 +50,11 @@ class FleetShipVisualLayer extends SpriteAnimationComponent
 
   void bobInPlace() {
     if (gameRef.isBobbingEnabled) {
-      final ec =
-          RepeatedEffectController(SineEffectController(period: 2), bobAmount);
+      final ec = InfiniteEffectController(SineEffectController(period: 2));
       final effect = MoveByEffect(Vector2(0, 5), ec);
-      add(effect);
+      Future.delayed(Duration(milliseconds: bobAmount), () {
+        add(effect);
+      });
     }
   }
 }

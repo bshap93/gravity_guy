@@ -32,7 +32,7 @@ class ContinueButtonComponent extends PositionComponent
 
     add(SpriteComponent(
       size: size,
-      anchor: anchor,
+      anchor: Anchor.topLeft,
       sprite: continueButtonSprite,
     ));
 
@@ -44,7 +44,7 @@ class ContinueButtonComponent extends PositionComponent
     add(TextComponent(
       text: 'Continue',
       priority: priority + 1,
-      position: Vector2(0, 0),
+      position: Vector2(width / 2, height / 2),
       anchor: Anchor.center,
       textRenderer: TextPaint(
         style: style,

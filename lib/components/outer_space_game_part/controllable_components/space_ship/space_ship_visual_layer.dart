@@ -14,7 +14,11 @@ class SpaceShipVisualLayer extends SpriteAnimationComponent
 
   Vector2 parentSize;
 
+  late InfiniteEffectController bobbingEffectController;
+
   late Shield shield;
+
+  late MoveByEffect bobbingEffect;
 
   Vector2 textureSize = Vector2(112, 48);
 
@@ -43,10 +47,16 @@ class SpaceShipVisualLayer extends SpriteAnimationComponent
 
   void bobInPlace() {
     if (gameRef.isBobbingEnabled) {
-      final ec = RepeatedEffectController(SineEffectController(period: 2), 5);
-      final effect = MoveByEffect(Vector2(0, 5), ec);
-      add(effect);
+      bobbingEffectController =
+          InfiniteEffectController(SineEffectController(period: 2));
+      bobbingEffect = MoveByEffect(Vector2(0, 5), bobbingEffectController);
+      add(bobbingEffect);
     }
+  }
+
+  void stopBobbing() {
+    remove(bobbingEffect);
+    print('Bobbing stopped');
   }
 
   void sprayParticlesBack(double angle) {

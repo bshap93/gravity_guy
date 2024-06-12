@@ -23,25 +23,25 @@ class ScriptDialogInteraction extends PositionComponent
     super.onLoad();
     priority = 15;
 
-    final scriptDialogSpriteComponent = SpriteComponent(
-      size: Vector2(500, 200),
-      position: Vector2(-40, 40),
-      anchor: Anchor.center,
-      sprite: await Sprite.load('ui_elements/dialog_box-teal.png'),
-    );
+    // final scriptDialogSpriteComponent = SpriteComponent(
+    //   size: Vector2(500, 200),
+    //   position: Vector2(-40, 40),
+    //   anchor: Anchor.center,
+    //   sprite: await Sprite.load('ui_elements/dialog_box-teal.png'),
+    // );
 
     // currentDialogText =
     //     "Make your way to the space ship. Press left or right arrow to bound across the moon.";
-    add(scriptDialogSpriteComponent);
+    // add(scriptDialogSpriteComponent);
     currentDialogComponent = TextBoxComponent(
       text: text,
       boxConfig: const TextBoxConfig(timePerChar: 0.05),
-      position: Vector2(0, 80),
-      size: Vector2(500, 100),
+      position: Vector2(0, 40),
+      size: Vector2(500, 200),
       anchor: Anchor.center,
       textRenderer: TextPaint(
         style: gameRef.mainTextFontStyle
-            .copyWith(fontSize: 20, color: Colors.black),
+            .copyWith(fontSize: 20, color: const Color(0xFFD9BB26)),
       ),
     );
     add(currentDialogComponent);
@@ -60,7 +60,7 @@ class ScriptDialogInteraction extends PositionComponent
     currentDialogComponent = TextBoxComponent(
         boxConfig: const TextBoxConfig(timePerChar: 0.05),
         text: s,
-        position: Vector2(625, 50),
+        position: Vector2(550, 50),
         size: Vector2(600, 100),
         anchor: Anchor.center,
         textRenderer: TextPaint(

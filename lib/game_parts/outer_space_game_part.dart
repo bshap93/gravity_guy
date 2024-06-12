@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame/text.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -41,10 +42,13 @@ class OuterSpaceGamePart extends GamePart {
   late RockyMoon rockyMoon;
   late Fleet fleet;
 
+  late SpriteFont holotype;
+
   TextStyle mainTextFontStyle = const TextStyle(
     color: Color(0xFFD9BB26),
-    fontSize: 12,
-    fontFamily: 'Roboto',
+    fontSize: 36,
+    fontFamily: 'Holotype',
+    fontWeight: FontWeight.w400,
   );
 
   @override

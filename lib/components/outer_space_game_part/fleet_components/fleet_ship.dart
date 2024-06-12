@@ -13,6 +13,7 @@ class FleetShip extends PositionComponent
     required this.shipImageName,
     required this.textureSize,
     required this.parentSize,
+    required this.bobDelay,
   });
 
   final Vector2 positionVector;
@@ -20,6 +21,7 @@ class FleetShip extends PositionComponent
   final String shipImageName;
   final Vector2 textureSize;
   final Vector2 parentSize;
+  final double bobDelay;
   late List<Vector2> dockingPositions = [];
 
   late FleetShipVisualLayer fleetShipVisualLayer;

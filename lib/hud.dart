@@ -76,6 +76,8 @@ class HUDComponent extends PositionComponent
           ),
         ));
     add(currentDialogComponent);
-    playBeepsForText(s);
+    if (gameRef.isSoundEnabled) {
+      playBeepsForText(s);
+    }
   }
 }
