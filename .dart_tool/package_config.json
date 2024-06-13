@@ -128,12 +128,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "flame_forge2d",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/flame_forge2d-0.18.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
-    },
-    {
       "name": "flame_tiled",
       "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/flame_tiled-1.20.2",
       "packageUri": "lib/",
@@ -162,12 +156,6 @@
       "rootUri": "file:///E:/Flutter/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
-    },
-    {
-      "name": "forge2d",
-      "rootUri": "file:///C:/Users/bshap/AppData/Local/Pub/Cache/hosted/pub.dev/forge2d-0.13.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "google_fonts",
@@ -410,7 +398,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-12T22:31:22.227265Z",
+  "generated": "2024-06-13T02:58:40.718030Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///E:/Flutter/flutter",

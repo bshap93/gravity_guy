@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:gravity_guy/game_parts/physics_expermental.dart';
+
+import 'game_parts/outer_space_game_part.dart';
 
 class GameOverview extends StatefulWidget {
   const GameOverview({super.key});
@@ -18,33 +19,33 @@ class _GameOverviewState extends State<GameOverview> {
 
 void main() {
   // FlameAudio.bgm.initialize();
-  // final game = OuterSpaceGamePart();
-  final game = PhysicsExpermental();
+  final game = OuterSpaceGamePart();
+  // final game = PhysicsExpermental();
 
-  runApp(GameWidget(game: game));
+  // runApp(GameWidget(game: game));
 
-  // runApp(GameWidget(
-  //   game: game,
-  //   overlayBuilderMap: {
-  //     'PauseMenu': (BuildContext context, OuterSpaceGamePart game) {
-  //       return Container(
-  //         color: Colors.black.withOpacity(0.5),
-  //         child: Center(
-  //           child: GestureDetector(
-  //             onTap: () {
-  //               game.unPauseGame('PauseMenu');
-  //             },
-  //             child: Text(
-  //               'Resume',
-  //               style: game.mainTextFontStyle.copyWith(
-  //                 fontSize: 32,
-  //                 color: const Color(0xFFD9BB26),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   },
-  // ));
+  runApp(GameWidget(
+    game: game,
+    overlayBuilderMap: {
+      'PauseMenu': (BuildContext context, OuterSpaceGamePart game) {
+        return Container(
+          color: Colors.black.withOpacity(0.5),
+          child: Center(
+            child: GestureDetector(
+              onTap: () {
+                game.unPauseGame('PauseMenu');
+              },
+              child: Text(
+                'Resume',
+                style: game.mainTextFontStyle.copyWith(
+                  fontSize: 32,
+                  color: const Color(0xFFD9BB26),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    },
+  ));
 }

@@ -27,8 +27,10 @@ class HUDComponent extends PositionComponent
   @override
   void onLoad() async {
     super.onLoad();
-    currentDialogText =
-        "Make your way to the space ship. Press left or right arrow to bound across the moon.";
+    if (!gameRef.skipIntro) {
+      currentDialogText =
+          "Make your way to the space ship. Press left or right arrow to bound across the moon.";
+    }
     dialogBoxComponent = SpriteComponent(
       size: Vector2(800, 100),
       position: Vector2(600, 50),
@@ -36,21 +38,24 @@ class HUDComponent extends PositionComponent
       anchor: Anchor.center,
     );
     add(dialogBoxComponent);
-    currentDialogComponent = TextBoxComponent(
-      text: currentDialogText,
-      boxConfig: const TextBoxConfig(timePerChar: 0.05),
-      position: Vector2(625, 50),
-      size: Vector2(600, 100),
-      anchor: Anchor.center,
-      textRenderer: TextPaint(
-        style: gameRef.mainTextFontStyle.copyWith(
-          fontSize: 20,
+
+    if (!gameRef.skipIntro) {
+      currentDialogComponent = TextBoxComponent(
+        text: currentDialogText,
+        boxConfig: const TextBoxConfig(timePerChar: 0.05),
+        position: Vector2(625, 50),
+        size: Vector2(600, 100),
+        anchor: Anchor.center,
+        textRenderer: TextPaint(
+          style: gameRef.mainTextFontStyle.copyWith(
+            fontSize: 20,
+          ),
         ),
-      ),
-    );
-    add(currentDialogComponent);
-    if (gameRef.isSoundEnabled) {
-      playBeepsForText(currentDialogText);
+      );
+      add(currentDialogComponent);
+      if (gameRef.isSoundEnabled) {
+        playBeepsForText(currentDialogText);
+      }
     }
   }
 

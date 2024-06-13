@@ -11,6 +11,7 @@ C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/window
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/fonts/Nabla-Regular.ttf
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/astronaut4_talking_head.png
+C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/background/grid.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/character_dialog_avatars/astronaut4_talking_head.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/character_dialog_avatars/other_astronaut_01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/debris/probe_1.png
@@ -29,6 +30,7 @@ C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/window
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_ships/capital_ship_01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_ships/corvette_01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_ships/hab_ship_01.png
+C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_ships/spaceship_32.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_station_exterior.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars02.png

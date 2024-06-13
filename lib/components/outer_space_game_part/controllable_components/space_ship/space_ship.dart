@@ -68,6 +68,10 @@ class SpaceShip extends PositionComponent
     ));
 
     add(spaceShipVisualLayer);
+
+    // if (gameRef.skipIntro) {
+    //   blastOff();
+    // }
   }
 
   @override
@@ -174,7 +178,9 @@ class SpaceShip extends PositionComponent
       engageShield();
       spaceShipVisualLayer.bobInPlace();
 
-      gameRef.alertUserToRadioForeman();
+      if (!gameRef.skipIntro) {
+        gameRef.alertUserToRadioForeman();
+      }
     });
   }
 

@@ -9,6 +9,7 @@ class Fleet extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
   late FleetShip capitalShip;
   late FleetShip corvette;
   late FleetShip habShip;
+  late FleetShip asteroidHoboShip;
 
   Fleet();
 
@@ -60,5 +61,19 @@ class Fleet extends PositionComponent with HasGameRef<OuterSpaceGamePart> {
 
     add(habShip);
     fleetShips.add(habShip);
+
+    asteroidHoboShip = FleetShip(
+        positionVector: Vector2(
+          -4000,
+          2400,
+        ),
+        initialAngle: 3.33794219,
+        shipImageName: 'spaceship_32',
+        bobDelay: 500,
+        textureSize: Vector2(368, 112),
+        parentSize: Vector2(736, 224));
+
+    add(asteroidHoboShip);
+    fleetShips.add(asteroidHoboShip);
   }
 }

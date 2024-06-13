@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame/text.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,8 +19,10 @@ import '../hud.dart';
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
-  static const double zoomOutMultiplier = 1;
+  static const double zoomOutMultiplier = 6;
   static const bool isDebugMode = true;
+  static const bool prettyMode = false;
+  bool skipIntro = true;
   bool isBobbingEnabled = true;
   bool isSoundEnabled = false;
 
@@ -61,28 +62,40 @@ class OuterSpaceGamePart extends GamePart {
     await Flame.images.load('debris/rock_1.png');
     await Flame.images.load('debris/rock_2.png');
     await Flame.images.load('debris/probe_1.png');
+    await Flame.images.load('background/grid.png');
 
     dialogueBoxComponent = DialogueBoxLarge();
 
-    final parallaxBackground1 = await loadParallaxComponent(
-      [
-        ParallaxImageData('spr_stars02.png'),
-        ParallaxImageData('spr_stars01.png'),
-      ],
-      baseVelocity: Vector2(20, 0),
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-      size: size * 3,
-      anchor: Anchor.center,
-      repeat: ImageRepeat.repeat,
-    );
+    if (prettyMode) {
+      final parallaxBackground1 = await loadParallaxComponent(
+        [
+          // ParallaxImageData('spr_stars02.png'),
+          // ParallaxImageData('spr_stars01.png'),
+          // ParallaxImageData('background/grid.png'),
+        ],
+        baseVelocity: Vector2(20, 0),
+        velocityMultiplierDelta: Vector2(1.8, 1.0),
+        size: size * 3,
+        anchor: Anchor.center,
+        repeat: ImageRepeat.repeat,
+      );
+
+      world.add(parallaxBackground1);
+    } else {
+      final gridBackground = SpriteComponent(
+        size: Vector2(10000, 10000),
+        sprite: await Sprite.load('background/grid.png'),
+        anchor: Anchor.center,
+      );
+
+      world.add(gridBackground);
+    }
 
     rockyMoon = RockyMoon(
       radius: starterPlanetRadius,
       offset: const Offset(0, 0),
       positionVector: Vector2(500, 500),
     );
-
-    world.add(parallaxBackground1);
 
     world.add(rockyMoon);
 
@@ -91,9 +104,11 @@ class OuterSpaceGamePart extends GamePart {
       500,
     );
 
-    astronaut =
-        AstronautOutdoorCharacterPart(initialPosition: Vector2(500, 125));
-    world.add(astronaut);
+    if (!skipIntro) {
+      astronaut =
+          AstronautOutdoorCharacterPart(initialPosition: Vector2(500, 125));
+      world.add(astronaut);
+    }
 
     // Space ship on the other side of the moon
     spaceShip = SpaceShip(initialAngle: pi / 2);
@@ -106,11 +121,20 @@ class OuterSpaceGamePart extends GamePart {
     hudComponent = HUDComponent();
     camera.viewport.add(hudComponent);
 
+    if (!skipIntro) {
+      camera.follow(
+        astronaut,
+      );
+    }
     camera.viewfinder.visibleGameSize = Vector2(1000, 1000) * zoomOutMultiplier;
-    camera.follow(
-      astronaut,
-    );
+
     camera.viewfinder.anchor = Anchor.center;
+
+    if (skipIntro) {
+      camera.follow(spaceShip);
+      camera.viewfinder.angle = spaceShip.angle;
+      spaceShip.blastOff();
+    }
   }
 
   @override
@@ -196,15 +220,6 @@ class OuterSpaceGamePart extends GamePart {
       return KeyEventResult.handled;
     }
 
-    /// Player presses down the right arrow key
-    /// The astronaut bounds to the right if it is touching the planet
-    if (isArrowRight && isGuyOutsideShip) {
-      boundRightOverview();
-      // walkRightOverview();
-      //
-      return KeyEventResult.handled;
-    }
-
     /// Player presses down the left arrow key
     /// The astronaut bounds to the left if it is touching the planet
     if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
@@ -252,28 +267,39 @@ class OuterSpaceGamePart extends GamePart {
       return KeyEventResult.handled;
     }
 
-    /// Player presses down the space key
-    if (wasKeySpace && isKeyDown && isGuyOutsideShip) {
-      astronaut.jumpAwayFromPlanet();
-      return KeyEventResult.handled;
-    }
+    if (!skipIntro) {
+      /// Player presses down the space key
+      if (wasKeySpace && isKeyDown && isGuyOutsideShip) {
+        astronaut.jumpAwayFromPlanet();
+        return KeyEventResult.handled;
+      }
 
-    if (wasArrowRight && isKeyUp && isGuyOutsideShip) {
-      astronaut.isWalking = false;
+      /// Player presses down the right arrow key
+      /// The astronaut bounds to the right if it is touching the planet
+      if (isArrowRight && isGuyOutsideShip) {
+        boundRightOverview();
+        // walkRightOverview();
+        //
+        return KeyEventResult.handled;
+      }
 
-      return KeyEventResult.handled;
-    }
+      if (wasArrowRight && isKeyUp && isGuyOutsideShip) {
+        astronaut.isWalking = false;
 
-    /// Player presses down the left arrow key
-    /// The astronaut bounds to the left if it is touching the planet
-    if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
-      boundLeftOverview();
-      return KeyEventResult.handled;
-    }
+        return KeyEventResult.handled;
+      }
 
-    if (isKeyUp && wasArrowLeft && isGuyOutsideShip) {
-      astronaut.isWalking = false;
-      return KeyEventResult.handled;
+      /// Player presses down the left arrow key
+      /// The astronaut bounds to the left if it is touching the planet
+      if (isKeyDown && isArrowLeft && isGuyOutsideShip) {
+        boundLeftOverview();
+        return KeyEventResult.handled;
+      }
+
+      if (isKeyUp && wasArrowLeft && isGuyOutsideShip) {
+        astronaut.isWalking = false;
+        return KeyEventResult.handled;
+      }
     }
 
     return KeyEventResult.ignored;
@@ -305,50 +331,12 @@ class OuterSpaceGamePart extends GamePart {
     }
   }
 
-  void beginDebrisGathering() {
-    // spaceShip.inOrbit = false;
-    // rockyMoon.stopSpinning();
-    // spaceShip.driftOut();
-  }
-
   void alertUserToRadioForeman() {
     hudComponent.updateMessage("Press C to radio the foreman");
     canPlayerInitiateDialogue = true;
   }
 
   void populateVicinityWithDebris(double maximumXDist, double maximumYDist) {
-    // final debris1 = DebrisComponent(
-    //   srcPath: 'debris/rock_1.png',
-    //   positionVar: Vector2(800, -240),
-    //   debrisSize: Vector2(113, 113),
-    //   startingAngle: 0.0,
-    //   angleVelocity: getRandomAngleVelocity(),
-    // );
-    //
-    // final debris2 = DebrisComponent(
-    //   srcPath: 'debris/rock_2.png',
-    //   positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
-    //   debrisSize: Vector2(70, 70),
-    //   startingAngle: 0.0,
-    //   angleVelocity: getRandomAngleVelocity(),
-    // );
-    //
-    // final debris4 = DebrisComponent(
-    //   srcPath: 'debris/rock_1.png',
-    //   positionVar: Vector2(1100, 500),
-    //   debrisSize: Vector2(113, 113),
-    //   startingAngle: 0.0,
-    //   angleVelocity: getRandomAngleVelocity(),
-    // );
-    //
-    // final debris5 = DebrisComponent(
-    //   srcPath: 'debris/rock_2.png',
-    //   positionVar: getRandomPositionWithinBounds(maximumXDist, maximumYDist),
-    //   debrisSize: Vector2(70, 70),
-    //   startingAngle: 0.0,
-    //   angleVelocity: getRandomAngleVelocity(),
-    // );
-
     final debris3 = DebrisComponent(
       srcPath: 'debris/probe_1.png',
       positionVar: Vector2(160, -200),

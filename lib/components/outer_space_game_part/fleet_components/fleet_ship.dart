@@ -61,8 +61,10 @@ class FleetShip extends PositionComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     if (other is SpaceShip) {
-      gameRef.hudComponent
-          .updateMessage('Press D to dock with the Capital Ship');
+      if (!gameRef.skipIntro) {
+        gameRef.hudComponent
+            .updateMessage('Press D to dock with the Capital Ship');
+      }
     }
   }
 }

@@ -86,7 +86,6 @@ class DialogueBoxLarge extends PositionComponent
       anchor: Anchor.center,
       onTap: () async {
         gameRef.exitDialogue();
-        gameRef.beginDebrisGathering();
       },
     ));
 
