@@ -32,6 +32,7 @@ C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/window
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/space_station_exterior.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars01.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/spr_stars02.png
+C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/stony_wall.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsdown.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsleft.png
 C:/Users/bshap/StudioProjects/GravityGuyOverview/6.8.24/gravity_guy/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/ui_elements/arrowsright.png

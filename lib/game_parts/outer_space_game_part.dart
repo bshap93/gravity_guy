@@ -17,8 +17,6 @@ import '../components/outer_space_game_part/fleet_components/fleet.dart';
 import '../components/outer_space_game_part/ui_components/dialog_box/dialogue_box_large.dart';
 import '../hud.dart';
 
-part 'outer_space_game_part_input.dart';
-
 class OuterSpaceGamePart extends GamePart {
   static const double starterPlanetRadius = 350.00;
   static const double starterPlanetMass = 10000; // KG ??
